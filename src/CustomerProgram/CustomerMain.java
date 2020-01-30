@@ -13,6 +13,7 @@ public class CustomerMain extends Application {
         Parent root = FXMLLoader.load(CustomerMain.class.getResource("../CustomerProgram/View/Login.fxml"));
         primaryStage.setTitle("The Bank - Customer Portal");
         primaryStage.setScene(new Scene(root));
+        CustomerViews.stage = primaryStage;
         primaryStage.show();
     }
 
