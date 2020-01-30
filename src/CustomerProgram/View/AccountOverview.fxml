@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -9,69 +10,68 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="668.0" prefWidth="1138.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CustomerProgram.Controller.AccountOverviewController">
-   <children>
-      <TableView fx:id="accountsTable" layoutX="612.0" layoutY="146.0" prefHeight="200.0" prefWidth="483.0">
-        <columns>
-          <TableColumn fx:id="accountNumCol" prefWidth="107.0" text="Account Number" />
-          <TableColumn fx:id="accountNameCol" prefWidth="129.0" text="Name" />
-            <TableColumn fx:id="accountAmountCol" prefWidth="116.0" text="Amount Available" />
-            <TableColumn fx:id="accountInterestCol" prefWidth="85.0" text="Interest Rate" />
-        </columns>
-      </TableView>
-      <TableView fx:id="loansTable" layoutX="612.0" layoutY="417.0" prefHeight="200.0" prefWidth="483.0">
-        <columns>
-          <TableColumn fx:id="loanNameCol" prefWidth="75.0" text="Name" />
-          <TableColumn fx:id="loanAmountCol" prefWidth="126.0" text="Amount Remaining" />
-            <TableColumn fx:id="monthlyPaymentCol" prefWidth="134.0" text="Monthly Payment" />
-            <TableColumn fx:id="loanInterestCol" prefWidth="103.0" text="Interest Rate" />
-        </columns>
-      </TableView>
-      <Label layoutX="612.0" layoutY="100.0" prefHeight="32.0" prefWidth="103.0" text="Accounts">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Label>
-      <Label layoutX="612.0" layoutY="376.0" prefHeight="32.0" prefWidth="103.0" text="Loans">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Label>
-      <Label layoutX="63.0" layoutY="100.0" prefHeight="32.0" prefWidth="248.0" text="Customer Information">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Label>
-      <Label layoutX="63.0" layoutY="154.0" prefHeight="17.0" prefWidth="78.0" text="First Name">
-         <font>
-            <Font size="16.0" />
-         </font></Label>
-      <TextField fx:id="firstNameField" layoutX="173.0" layoutY="154.0" />
-      <Label layoutX="63.0" layoutY="204.0" prefHeight="17.0" prefWidth="78.0" text="Last Name">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <TextField fx:id="lastNameField" layoutX="173.0" layoutY="204.0" />
-      <Label layoutX="63.0" layoutY="344.0" prefHeight="32.0" prefWidth="248.0" text="Change PIN">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Label>
-      <Label layoutX="63.0" layoutY="392.0" prefHeight="17.0" prefWidth="78.0" text="Enter PIN">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <TextField fx:id="pinField" layoutX="173.0" layoutY="392.0" />
-      <Label layoutX="63.0" layoutY="442.0" prefHeight="25.0" prefWidth="96.0" text="Re-enter PIN">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <TextField fx:id="pinConfirmationField" layoutX="173.0" layoutY="442.0" />
-      <Button layoutX="173.0" layoutY="246.0" mnemonicParsing="false" onAction="#saveCustomerProfile" prefHeight="25.0" prefWidth="96.0" text="Save Changes" />
-      <Button layoutX="173.0" layoutY="485.0" mnemonicParsing="false" onAction="#saveCustomerPIN" prefHeight="25.0" prefWidth="96.0" text="Change PIN" />
-      <Button layoutX="612.0" layoutY="348.0" mnemonicParsing="false" onAction="#seeAccountHistory" prefHeight="25.0" prefWidth="96.0" text="See History" />
-      <Button layoutX="612.0" layoutY="617.0" mnemonicParsing="false" onAction="#seeLoanHistory" prefHeight="25.0" prefWidth="96.0" text="See History" />
-   </children>
+   <TableView fx:id="accountsTable" layoutX="612.0" layoutY="146.0" prefHeight="200.0" prefWidth="483.0">
+      <columns>
+         <TableColumn fx:id="accountNumCol" prefWidth="107.0" text="Account Number" />
+         <TableColumn fx:id="accountNameCol" prefWidth="129.0" text="Name" />
+         <TableColumn fx:id="accountAmountCol" prefWidth="116.0" text="Amount Available" />
+         <TableColumn fx:id="accountInterestCol" prefWidth="85.0" text="Interest Rate" />
+      </columns>
+   </TableView>
+   <TableView fx:id="loansTable" layoutX="612.0" layoutY="417.0" prefHeight="200.0" prefWidth="483.0">
+      <columns>
+         <TableColumn fx:id="loanNameCol" prefWidth="75.0" text="Name" />
+         <TableColumn fx:id="loanAmountCol" prefWidth="126.0" text="Amount Remaining" />
+         <TableColumn fx:id="monthlyPaymentCol" prefWidth="134.0" text="Monthly Payment" />
+         <TableColumn fx:id="loanInterestCol" prefWidth="103.0" text="Interest Rate" />
+      </columns>
+   </TableView>
+   <Label layoutX="612.0" layoutY="100.0" prefHeight="32.0" prefWidth="103.0" text="Accounts">
+      <font>
+         <Font name="System Bold" size="20.0" />
+      </font>
+   </Label>
+   <Label layoutX="612.0" layoutY="376.0" prefHeight="32.0" prefWidth="103.0" text="Loans">
+      <font>
+         <Font name="System Bold" size="20.0" />
+      </font>
+   </Label>
+   <Label layoutX="63.0" layoutY="100.0" prefHeight="32.0" prefWidth="248.0" text="Customer Information">
+      <font>
+         <Font name="System Bold" size="20.0" />
+      </font>
+   </Label>
+   <Label layoutX="58.0" layoutY="196.0" prefHeight="17.0" prefWidth="78.0" text="First Name">
+      <font>
+         <Font size="16.0" />
+      </font>
+   </Label>
+   <TextField fx:id="firstNameField" layoutX="168.0" layoutY="196.0" />
+   <Label layoutX="58.0" layoutY="246.0" prefHeight="17.0" prefWidth="78.0" text="Last Name">
+      <font>
+         <Font size="16.0" />
+      </font>
+   </Label>
+   <TextField fx:id="lastNameField" layoutX="168.0" layoutY="246.0" />
+   <Label layoutX="63.0" layoutY="344.0" prefHeight="32.0" prefWidth="248.0" text="Change PIN">
+      <font>
+         <Font name="System Bold" size="20.0" />
+      </font>
+   </Label>
+   <Label layoutX="63.0" layoutY="392.0" prefHeight="17.0" prefWidth="78.0" text="Enter PIN">
+      <font>
+         <Font size="16.0" />
+      </font>
+   </Label>
+   <Label layoutX="63.0" layoutY="442.0" prefHeight="25.0" prefWidth="96.0" text="Re-enter PIN">
+      <font>
+         <Font size="16.0" />
+      </font>
+   </Label>
+   <Button layoutX="173.0" layoutY="292.0" mnemonicParsing="false" onAction="#saveCustomerProfile" prefHeight="25.0" prefWidth="96.0" text="Save Changes" />
+   <Button layoutX="173.0" layoutY="485.0" mnemonicParsing="false" onAction="#changeCustomerPIN" prefHeight="25.0" prefWidth="96.0" text="Change PIN" />
+   <Button layoutX="612.0" layoutY="348.0" mnemonicParsing="false" onAction="#seeAccountHistory" prefHeight="25.0" prefWidth="96.0" text="See History" />
+   <Button layoutX="612.0" layoutY="617.0" mnemonicParsing="false" onAction="#seeLoanHistory" prefHeight="25.0" prefWidth="96.0" text="See History" />
+   <PasswordField fx:id="pinField" layoutX="173.0" layoutY="392.0" onAction="#changeCustomerPIN" />
+   <PasswordField fx:id="pinConfirmationField" layoutX="173.0" layoutY="442.0" onAction="#changeCustomerPIN" />
 </AnchorPane>

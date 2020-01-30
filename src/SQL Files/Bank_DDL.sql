@@ -8,6 +8,7 @@ CREATE TABLE `customer` (
   `customer_id` INT NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR(45) NOT NULL,
   `last_name` VARCHAR(45) NOT NULL,
+  `personal_number` VARCHAR(45) NOT NULL,
   `PIN` INT UNIQUE NOT NULL,
   PRIMARY KEY (`customer_id`));
 
@@ -46,10 +47,10 @@ CREATE TABLE `the_bank`.`transaction` (
     REFERENCES `the_bank`.`account` (`account_id`)
     ON DELETE SET NULL);
 
-INSERT INTO customer (first_name, last_name, PIN) VALUES ('Valentin' , 'Eriksson' ,1234),
-                                                         ('Daniel', 'Hughes' ,1248),
-                                                         ('Johan','Özbek', 2468),
-                                                         ('Elias', 'Mehr', 3696);
+INSERT INTO customer (first_name, last_name, personal_number, PIN) VALUES ('Valentin' , 'Eriksson', '19910125-5678',1234),
+                                                         ('Daniel', 'Hughes','19871028-1243',1248 ),
+                                                         ('Johan','÷zbek','19951229-5221',2468),
+                                                         ('Elias', 'Mehr', '19900304-1234', 3696);
 
 INSERT INTO account (account_number, amount, customer_id)
 
@@ -67,7 +68,10 @@ VALUES (300000, 3, 10000, 1),
 
 INSERT INTO transaction (amount, date, account_id)
 
-VALUES (37, now(), 1),
+VALUES (37, now() - interval 29 day, 1),
+(37, now() - interval 130 day, 1),
+(37, now() - interval 100 day, 1),
+(37, now() - interval 1 year, 1),
        (299, now(), 2),
        (457, now(), 3),
        (2500, now(), 4),
@@ -75,7 +79,7 @@ VALUES (37, now(), 1),
        (53, now(), 2),
        (349, now(), 3),
        (599, now(), 4),
-       (449, now(), 1),
+       (449, now() - interval 15 day, 1),
        (649, now(), 2),
        (999, now(), 3),
        (25, now(), 4),
@@ -86,4 +90,4 @@ VALUES (37, now(), 1),
        (3200, now(), 1),
        (88, now(), 2),
        (399, now(), 3),
-       (8000, now(), 4) ;
+       (8000, now(), 4);

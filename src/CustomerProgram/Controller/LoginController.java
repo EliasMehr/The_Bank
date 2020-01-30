@@ -4,12 +4,15 @@ import CustomerProgram.CustomerViews;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
 public class LoginController {
 
 
     @FXML
-    private PasswordField passwordField;
+    private TextField personalIdField;
+    @FXML
+    private PasswordField pinField;
 
     @FXML
     private void attemptLogin(ActionEvent actionEvent) {

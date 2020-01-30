@@ -10,7 +10,7 @@ public class AdminMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(AdminMain.class.getResource("../AdminProgram/View/Login.fxml"));
+        Parent root = FXMLLoader.load(AdminMain.class.getResource("../AdminProgram/View/MainMenu.fxml"));
         primaryStage.setTitle("The Bank - Customer Portal");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
