@@ -5,10 +5,10 @@ import java.util.List;
 
 public class Customer {
     private int customerId;
+    private int pin;
     private String personalID;
     private String firstName;
     private String lastName;
-    private int pin;
 
     private List<Account> accounts = new ArrayList<>();
     private List<Loan> loans = new ArrayList<>();
