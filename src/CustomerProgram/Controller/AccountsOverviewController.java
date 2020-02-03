@@ -1,6 +1,7 @@
 package CustomerProgram.Controller;
 
 import CustomerProgram.CustomerMain;
+import Model.Account;
 import Model.Customer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,7 +11,7 @@ import javafx.scene.input.KeyEvent;
 public class AccountsOverviewController {
 
     @FXML
-    private TableView accountsOverview;
+    private TableView<Account> accountsOverview;
     @FXML
     private TableColumn accountCol;
     @FXML
@@ -52,10 +53,21 @@ public class AccountsOverviewController {
     @FXML
     private Label customerNameLabel;
 
+    private Customer customer;
+
 
     public void initialize(){
+    customer = new Customer(); //TODO Get customer from database
+    customerNameLabel.setText("Välkommen till The Bank, " + customer.getFirstName() + " " + customer.getLastName());
+    populateAccountsOverview();
+    populateLoansOverview();
 
+    }
 
+    private void populateLoansOverview() {
+    }
+
+    private void populateAccountsOverview() {
     }
 
 

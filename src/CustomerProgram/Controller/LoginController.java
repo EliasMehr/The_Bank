@@ -13,6 +13,10 @@ public class LoginController {
     private TextField personalIdField;
     @FXML
     private PasswordField pinField;
+    @FXML
+    private PasswordField passwordField;
+    @FXML
+    private TextField usernameField;
 
     @FXML
     private void attemptLogin(ActionEvent actionEvent) {

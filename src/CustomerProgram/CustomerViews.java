@@ -28,7 +28,7 @@ public class CustomerViews {
                 fxmlName = "Login";
                 break;
             case ACCOUNT_OVERVIEW:
-                fxmlName = "AccountOverview";
+                fxmlName = "AccountsOverview";
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + view);
