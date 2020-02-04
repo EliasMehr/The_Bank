@@ -1,6 +1,7 @@
 package AdminProgram.Controller;
 
 import AdminProgram.AdminMain;
+import CustomerProgram.CustomerMain;
 import Model.Account;
 import Model.Customer;
 import Model.Loan;
@@ -72,15 +73,19 @@ public class CustomerOverviewController {
         if(currentCustomer == null)
             AdminMain.showErrorMessage("Personnumret finns inte i databasen", "Kunde inte hämta personuppgifter");
         else{
-            AdminMain.customerIdentity = currentCustomer.getCustomerId();
-            firstNameField.setText(currentCustomer.getFirstName());
-            lastNameField.setText(currentCustomer.getLastName());
-            pinField.setText(String.valueOf(currentCustomer.getPin()));
-            personalNumberField.setText(currentCustomer.getPersonalNumber());
-            
+            refreshCustomerInformation();
+
             populateAccountsOverview(currentCustomer);
             populateAccountsOverview(currentCustomer);
         }
+    }
+
+    private void refreshCustomerInformation() {
+        AdminMain.customerIdentity = currentCustomer.getCustomerId();
+        firstNameField.setText(currentCustomer.getFirstName());
+        lastNameField.setText(currentCustomer.getLastName());
+        pinField.setText(String.valueOf(currentCustomer.getPin()));
+        personalNumberField.setText(currentCustomer.getPersonalNumber());
     }
 
     private void populateAccountsOverview(Customer customer) {
@@ -88,7 +93,19 @@ public class CustomerOverviewController {
 
     @FXML
     private void updatePersonalInformation(ActionEvent actionEvent) {
-        
+        try {
+            int newPin = Integer.parseInt(pinField.getText());
+
+            currentCustomer.setFirstName(firstNameField.getText());
+            currentCustomer.setLastName(lastNameField.getText());
+            currentCustomer.setPersonalNumber(personalNumberField.getText());
+            currentCustomer.setPin(newPin);
+            CustomerRepository.changePersonalInfo(currentCustomer, currentCustomer.getFirstName(), currentCustomer.getLastName(), currentCustomer.getPersonalNumber(), currentCustomer.getPin());
+            refreshCustomerInformation();
+            CustomerMain.showInformationMessage("Personliga uppgifter uppdaterat för " + currentCustomer.getFirstName() + " " + currentCustomer.getLastName(), "Tadaa!!");
+        } catch (NumberFormatException e) {
+            AdminMain.showErrorMessage("PIN får endast innehålla siffror!", "Ogiltig PIN-kod");
+        }
     }
 
     @FXML
