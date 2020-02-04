@@ -11,7 +11,7 @@ public class TransactionRepository {
 
     private static final String url = "jdbc:mysql://localhost:3306/the_bank";
 
-    public boolean getTransactions(Account account, Date fromDate, Date toDate){
+    public static boolean getTransactions(Account account, Date fromDate, Date toDate){
         PreparedStatement preparedStatement = null;
 
         account.setAccountId(1);
@@ -44,7 +44,7 @@ public class TransactionRepository {
         return true;
     }
 
-    public void recentMonthTransactions(Account account){
+    public static void recentMonthTransactions(Account account){
 
         try(Connection connection = DriverManager.getConnection(url, "root", "root")) {
 
