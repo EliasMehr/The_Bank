@@ -63,7 +63,6 @@ public class LoanRepository {
                 loan.setAmount(resultSet.getDouble(2));
                 loan.setInterestRate(resultSet.getDouble(3));
                 loan.setMonthlyPayment(resultSet.getDouble(4));
-                loan.setCustomerId(resultSet.getInt(5));
 
                 customer.getLoans().add(loan);
             }

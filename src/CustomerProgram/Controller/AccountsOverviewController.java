@@ -1,10 +1,6 @@
 package CustomerProgram.Controller;
 
-import CustomerProgram.CustomerMain;
-import Model.Account;
-import Model.Customer;
-import Model.Loan;
-import Model.Transaction;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -15,21 +11,21 @@ import java.util.Date;
 public class AccountsOverviewController {
 
     @FXML
-    private TableView<Account> accountsOverview;
+    private TableView accountsOverview;
     @FXML
-    private TableColumn<Account, Integer> accountCol;
+    private TableColumn accountCol;
     @FXML
-    private TableColumn<Account, String> accountTypeCol;
+    private TableColumn accountTypeCol;
     @FXML
-    private TableColumn<Account, Double> accountAmountCol;
+    private TableColumn accountAmountCol;
     @FXML
-    private TableColumn<Account, Double> accountInterestCol;
+    private TableColumn accountInterestCol;
     @FXML
-    private TableView<Loan> loansOverview;
+    private TableView loansOverview;
     @FXML
-    private TableColumn<Loan, String> loanTypeCol;
+    private TableColumn loanTypeCol;
     @FXML
-    private TableColumn<Loan, Double> loanAmountCol;
+    private TableColumn loanAmountCol;
     @FXML
     private TableColumn loanMortgageCol;
     @FXML
@@ -37,15 +33,15 @@ public class AccountsOverviewController {
     @FXML
     private TableColumn loanPaymentPlanCol;
     @FXML
-    private TableView<Transaction> transactionHistory;
+    private TableView transactionHistory;
     @FXML
-    private TableColumn<Transaction, Date> transactionDateCol;
+    private TableColumn transactionDateCol;
     @FXML
-    private TableColumn<Transaction, String> transactionTypeCol;
+    private TableColumn transactionTypeCol;
     @FXML
-    private TableColumn<Transaction, Double> transactionAmountCol;
+    private TableColumn transactionAmountCol;
     @FXML
-    private TableColumn<Transaction, Integer> transactionAccountCol;
+    private TableColumn transactionAccountCol;
     @FXML
     private DatePicker fromDate;
     @FXML
@@ -53,16 +49,13 @@ public class AccountsOverviewController {
     @FXML
     private TextField withdrawalAmountField;
     @FXML
-    private ComboBox<Account> withdrawalAccountSelector;
+    private ComboBox withdrawalAccountSelector;
     @FXML
     private Label customerNameLabel;
 
-    private Customer customer;
 
 
     public void initialize(){
-    customer = new Customer(); //TODO Get customer from database
-    customerNameLabel.setText("Välkommen till The Bank, " + customer.getFirstName() + " " + customer.getLastName());
     populateAccountsOverview();
     populateLoansOverview();
 

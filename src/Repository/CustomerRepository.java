@@ -1,5 +1,6 @@
 package Repository;
 
+
 import Model.Customer;
 
 import java.sql.*;
@@ -54,7 +55,7 @@ public class CustomerRepository {
         return customer;
     }
 
-    public Customer getCustomerByPersonalNumber(String personalNumber) {
+    public static Customer getCustomerByPersonalNumber(String personalNumber) {
         Customer customer = new Customer();
 
         try(Connection connection = DriverManager.getConnection(url, "root", "root")) {
