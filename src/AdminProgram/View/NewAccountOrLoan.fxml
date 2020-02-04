@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="356.0"
+            prefWidth="657.0" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="AdminProgram.Controller.NewAccountOrLoanController">
+   <ImageView fitHeight="507.0" fitWidth="676.0" layoutX="-19.0" layoutY="-96.0" pickOnBounds="true"
+              preserveRatio="true">
+      <Image url="@../../Resources/storyboard.gif"/>
+   </ImageView>
+   <ComboBox layoutX="200.0" layoutY="81.0" prefWidth="150.0" promptText="Välj antal år"/>
+   <TextField layoutX="39.0" layoutY="81.0" promptText="Ange summa"/>
+   <ComboBox layoutX="364.0" layoutY="81.0" prefWidth="150.0" promptText="Välj lånetyp"/>
+   <Label layoutX="39.0" layoutY="55.0" text="Lån summa"/>
+   <Label layoutX="200.0" layoutY="55.0" text="Återbetalningsperiod"/>
+   <Label layoutX="364.0" layoutY="55.0" text="Typ av lån"/>
+   <Button layoutX="526.0" layoutY="118.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0"
+           text="Bevilja lån"/>
+   <Separator layoutX="35.0" layoutY="161.0" prefHeight="8.0" prefWidth="584.0"/>
+   <Label layoutX="32.0" layoutY="218.0" text="Kontotyp"/>
+   <ComboBox layoutX="32.0" layoutY="242.0" prefWidth="150.0" promptText="Välj kontotyp"/>
+   <Label layoutX="195.0" layoutY="218.0" text="Start belopp"/>
+   <TextField layoutX="195.0" layoutY="242.0" promptText="ange insättningsbelopp"/>
+   <ComboBox layoutX="523.0" layoutY="81.0" prefHeight="25.0" prefWidth="97.0" promptText="Välj ränta"/>
+   <Label layoutX="523.0" layoutY="55.0" text="Räntesats"/>
+   <Label layoutX="354.0" layoutY="218.0" text="Räntesats"/>
+   <ComboBox layoutX="354.0" layoutY="242.0" prefHeight="25.0" prefWidth="97.0" promptText="Välj ränta"/>
+   <Button layoutX="459.0" layoutY="242.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0"
+           text="Skapa konto"/>
+   <Label layoutX="41.0" layoutY="14.0" text="LÅN HANTERING">
+      <font>
+         <Font name="System Bold Italic" size="20.0"/>
+      </font>
+   </Label>
+   <Label layoutX="32.0" layoutY="181.0" text="KONTO HANTERING">
+      <font>
+         <Font name="System Bold Italic" size="20.0"/>
+      </font>
+   </Label>
+   <Separator layoutX="32.0" layoutY="285.0" prefHeight="8.0" prefWidth="584.0"/>
+   <Label layoutX="35.0" layoutY="311.0" text="Hanterar följande kund: "/>
+</AnchorPane>
