@@ -5,13 +5,14 @@ import java.util.List;
 
 public class Customer {
     private int customerId;
-    private int pin;
-    private String personalID;
+    private String personalNumber;
     private String firstName;
     private String lastName;
+    private int pin;
 
     private List<Account> accounts = new ArrayList<>();
     private List<Loan> loans = new ArrayList<>();
+
 
     public int getCustomerId() {
         return customerId;
@@ -21,12 +22,12 @@ public class Customer {
         this.customerId = customerId;
     }
 
-    public String getPersonalID() {
-        return personalID;
+    public String getPersonalNumber() {
+        return personalNumber;
     }
 
-    public void setPersonalID(String personalID) {
-        this.personalID = personalID;
+    public void setPersonalNumber(String personalNumber) {
+        this.personalNumber = personalNumber;
     }
 
     public String getFirstName() {

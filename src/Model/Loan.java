@@ -1,12 +1,11 @@
 package Model;
 
-public class Loan {
+public class Loan{
     private int loanId;
     private double amount;
     private double interestRate;
     private double monthlyPayment;
     private String name;
-    private int customerId;
 
     public int getLoanId() {
         return loanId;
@@ -46,13 +45,5 @@ public class Loan {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
     }
 }

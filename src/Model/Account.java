@@ -1,12 +1,32 @@
 package Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Account {
     private int accountId;
-    private int accountNumber;
-    private String name;
+    private String accountNumber;
+    private int customerId;
     private double amount;
     private double interestRate;
-    private int customerId;
+
+    private List<Transaction> transactions = new ArrayList<>();
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
 
     public int getAccountId() {
         return accountId;
@@ -14,22 +34,6 @@ public class Account {
 
     public void setAccountId(int accountId) {
         this.accountId = accountId;
-    }
-
-    public int getAccountNumber() {
-        return accountNumber;
-    }
-
-    public void setAccountNumber(int accountNumber) {
-        this.accountNumber = accountNumber;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public double getAmount() {
@@ -48,11 +52,11 @@ public class Account {
         this.interestRate = interestRate;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public List<Transaction> getTransactions() {
+        return transactions;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 }

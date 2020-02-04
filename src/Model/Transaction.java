@@ -1,11 +1,31 @@
 package Model;
 
+import java.time.LocalDateTime;
+
 public class Transaction {
     private int transactionId;
     private int accountId;
     private double amount;
-//    private Date date; FIXME
+    private LocalDateTime date;
 
+    public Transaction(){
+
+    }
+
+    public Transaction(int transactionId, int accountId, double amount, LocalDateTime date) {
+        this.transactionId = transactionId;
+        this.accountId = accountId;
+        this.amount = amount;
+        this.date = date;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
 
     public int getTransactionId() {
         return transactionId;
