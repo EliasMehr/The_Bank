@@ -35,7 +35,7 @@ public class AccountRepository {
         return true;
     }
 
-    public boolean withdraw(int accountId, double amount) {
+    public static boolean withdraw(int accountId, double amount) {
 
         try (Connection connection = DriverManager.getConnection(url, "root", "root")) {
             amount = amount * -1;

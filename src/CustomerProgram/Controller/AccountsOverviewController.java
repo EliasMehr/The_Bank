@@ -68,8 +68,14 @@ public class AccountsOverviewController {
     public void initialize() {
         customer = CustomerRepository.getCustomerById(CustomerMain.customerIdentity);
         customerNameLabel.setText("Välkommen till The Bank, " + customer.getFirstName() + " " + customer.getLastName());
+
         populateAccountsOverview();
         populateLoansOverview();
+        populateWithdrawalAccountSelector();
+    }
+
+    private void populateWithdrawalAccountSelector() {
+        withdrawalAccountSelector.setItems(FXCollections.observableList(customer.getAccounts()));
     }
 
     private void populateLoansOverview() {

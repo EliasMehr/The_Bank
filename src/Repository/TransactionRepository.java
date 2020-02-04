@@ -14,9 +14,6 @@ public class TransactionRepository {
     public boolean getTransactions(Account account, Date fromDate, Date toDate){
         PreparedStatement preparedStatement = null;
 
-
-
-
         account.setAccountId(1);
 
         try(Connection connection = DriverManager.getConnection(url, "root", "root")) {
