@@ -82,7 +82,11 @@ public class AccountsOverviewController {
         populateAccountsOverview();
         populateLoansOverview();
         populateWithdrawalAccountSelector();
+        populateTransactionHistory();
 
+    }
+
+    private void populateTransactionHistory() {
         NumberFormat currency = NumberFormat.getCurrencyInstance();
         TransactionRepository.recentMonthTransactions(customer.getAccounts().get(0));
 
