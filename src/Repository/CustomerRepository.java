@@ -31,7 +31,7 @@ public class CustomerRepository {
         return customerId;
     }
 
-    public Customer getCustomerById(int customerId) {
+    public static Customer getCustomerById(int customerId) {
         Customer customer = new Customer();
 
         try (Connection connection = DriverManager.getConnection(url, "root", "root")) {
@@ -83,7 +83,7 @@ public class CustomerRepository {
         return customer;
     }
 
-    public boolean changePersonalInfo(Customer customer, String firstName, String lastName, String personalNumber, int pin) {
+    public static boolean changePersonalInfo(Customer customer, String firstName, String lastName, String personalNumber, int pin) {
         PreparedStatement preparedStatement = null;
         try(Connection connection = DriverManager.getConnection(url, "root", "root")) {
             preparedStatement = connection.prepareStatement("{ call change_personal_info(?,?,?,?,?) }");
@@ -106,7 +106,7 @@ public class CustomerRepository {
         return true;
     }
 
-    public boolean addCustomer(String firstName, String lastName, String personalNumber, int pin) {
+    public static boolean addCustomer(String firstName, String lastName, String personalNumber, int pin) {
 
         PreparedStatement preparedStatement = null;
         try(Connection connection = DriverManager.getConnection(url, "root", "root")) {
@@ -132,7 +132,7 @@ public class CustomerRepository {
         }
     }
 
-    public boolean deleteCustomer(int customerId){
+    public static boolean deleteCustomer(int customerId){
 
         try(Connection connection = DriverManager.getConnection(url, "root", "root")){
 
