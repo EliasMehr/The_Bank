@@ -12,134 +12,116 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="555.0" prefWidth="983.0" style="-fx-background-color: #FFFFFF;"
-            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="AdminProgram.Controller.CustomerOverviewController">
-   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="33.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true"/>
+<AnchorPane prefHeight="555.0" prefWidth="983.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AdminProgram.Controller.CustomerOverviewController">
+   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="33.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
    <ImageView fitHeight="85.0" fitWidth="205.0" layoutX="20.0" layoutY="26.0">
-      <Image url="@../../Resources/logo.png"/>
+      <Image url="@../../Resources/logo.png" />
    </ImageView>
    <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="407.0" layoutY="26.0" onMouseClicked="#addCustomer">
-      <Image url="@../../Resources/new_customer.png"/>
+      <Image url="@../../Resources/new_customer.png" />
    </ImageView>
    <TableView layoutX="498.0" layoutY="138.0" prefHeight="109.0" prefWidth="470.0">
       <columns>
-         <TableColumn prefWidth="88.0" text="Kontonummer"/>
-         <TableColumn prefWidth="77.60003662109375" text="Typ"/>
-         <TableColumn prefWidth="124.7999267578125" text="Disponibelt Belopp"/>
-         <TableColumn prefWidth="95.199951171875" text="Ränta"/>
+         <TableColumn prefWidth="88.0" text="Kontonummer" />
+         <TableColumn prefWidth="77.60003662109375" text="Typ" />
+         <TableColumn prefWidth="124.7999267578125" text="Disponibelt Belopp" />
+         <TableColumn prefWidth="95.199951171875" text="Ränta" />
       </columns>
    </TableView>
-   <Button layoutX="493.0" layoutY="256.0" mnemonicParsing="false" text="Insättning"/>
-   <Button layoutX="567.0" layoutY="256.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Uttag"/>
-   <Button layoutX="898.0" layoutY="256.0" mnemonicParsing="false" onAction="#remove" prefHeight="26.0" prefWidth="70.0"
-           style="-fx-background-color: #FF0000;" text="Avsluta" textFill="WHITE"/>
-   <Button layoutX="713.0" layoutY="255.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="80.0"
-           text="Ändra ränta"/>
-   <TextField layoutX="126.0" layoutY="141.0" prefHeight="26.0" prefWidth="120.0"/>
-   <TextField layoutX="126.0" layoutY="177.0" prefHeight="26.0" prefWidth="120.0"/>
-   <Label layoutX="20.0" layoutY="111.0" prefHeight="20.0" prefWidth="470.0" style="-fx-background-color: #2680CD;"
-          text="Kundinformation" textFill="WHITE">
+   <Button layoutX="493.0" layoutY="256.0" mnemonicParsing="false" text="Insättning" />
+   <Button layoutX="567.0" layoutY="256.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Uttag" />
+   <Button layoutX="898.0" layoutY="256.0" mnemonicParsing="false" onAction="#remove" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: #FF0000;" text="Avsluta" textFill="WHITE" />
+   <Button layoutX="713.0" layoutY="255.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="80.0" text="Ändra ränta" />
+   <TextField layoutX="126.0" layoutY="141.0" prefHeight="26.0" prefWidth="120.0" />
+   <TextField layoutX="126.0" layoutY="177.0" prefHeight="26.0" prefWidth="120.0" />
+   <Label layoutX="20.0" layoutY="111.0" prefHeight="20.0" prefWidth="470.0" style="-fx-background-color: #2680CD;" text="Kundinformation" textFill="WHITE">
       <font>
-         <Font size="14.0"/>
+         <Font size="14.0" />
       </font>
    </Label>
    <Label layoutX="20.0" layoutY="144.0" text="Personnummer">
       <font>
-         <Font size="14.0"/>
+         <Font size="14.0" />
       </font>
    </Label>
    <Label layoutX="20.0" layoutY="180.0" text="Förnamn">
       <font>
-         <Font size="14.0"/>
+         <Font size="14.0" />
       </font>
    </Label>
    <Label layoutX="255.0" layoutY="180.0" text="Efternamn">
       <font>
-         <Font size="14.0"/>
+         <Font size="14.0" />
       </font>
    </Label>
-   <TextField layoutX="344.0" layoutY="177.0" prefHeight="26.0" prefWidth="146.0"/>
+   <TextField layoutX="344.0" layoutY="177.0" prefHeight="26.0" prefWidth="146.0" />
    <Label layoutX="255.0" layoutY="144.0" text="PIN">
       <font>
-         <Font size="14.0"/>
+         <Font size="14.0" />
       </font>
    </Label>
-   <PasswordField layoutX="344.0" layoutY="142.0" prefHeight="26.0" prefWidth="145.0"/>
-   <Label layoutX="498.0" layoutY="111.0" prefHeight="20.0" prefWidth="470.0" style="-fx-background-color: #2680CD;"
-          text="Kontoöversikt" textFill="WHITE">
+   <PasswordField layoutX="344.0" layoutY="142.0" prefHeight="26.0" prefWidth="145.0" />
+   <Label layoutX="498.0" layoutY="111.0" prefHeight="20.0" prefWidth="470.0" style="-fx-background-color: #2680CD;" text="Kontoöversikt" textFill="WHITE">
       <font>
-         <Font size="14.0"/>
+         <Font size="14.0" />
       </font>
    </Label>
-   <Button layoutX="249.0" layoutY="214.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="146.0"
-           text="Spara ändringar"/>
-   <Button layoutX="404.0" layoutY="214.0" mnemonicParsing="false" onAction="#remove" prefHeight="26.0" prefWidth="86.0"
-           style="-fx-background-color: #FF0000;" text="Avsluta kund" textFill="WHITE"/>
-   <Label layoutX="20.0" layoutY="298.0" prefHeight="20.0" prefWidth="470.0" style="-fx-background-color: #2680CD;"
-          text="Lånöversikt" textFill="WHITE">
+   <Button layoutX="249.0" layoutY="214.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="146.0" text="Spara ändringar" />
+   <Button layoutX="404.0" layoutY="214.0" mnemonicParsing="false" onAction="#remove" prefHeight="26.0" prefWidth="86.0" style="-fx-background-color: #FF0000;" text="Avsluta kund" textFill="WHITE" />
+   <Label layoutX="20.0" layoutY="298.0" prefHeight="20.0" prefWidth="470.0" style="-fx-background-color: #2680CD;" text="Lånöversikt" textFill="WHITE">
       <font>
-         <Font size="14.0"/>
+         <Font size="14.0" />
       </font>
    </Label>
    <TableView layoutX="19.0" layoutY="327.0" prefHeight="168.0" prefWidth="470.0">
       <columns>
-         <TableColumn editable="false" prefWidth="75.0" text="Typ"/>
-         <TableColumn editable="false" prefWidth="119.20001220703125" text="Lånebelopp"/>
-         <TableColumn editable="false" prefWidth="92.800048828125" text="Ammortering"/>
-         <TableColumn prefWidth="60.0" text="Ränta"/>
-         <TableColumn prefWidth="75.0" text="Betalplan"/>
+         <TableColumn editable="false" prefWidth="75.0" text="Typ" />
+         <TableColumn editable="false" prefWidth="119.20001220703125" text="Lånebelopp" />
+         <TableColumn editable="false" prefWidth="92.800048828125" text="Ammortering" />
+         <TableColumn prefWidth="60.0" text="Ränta" />
+         <TableColumn prefWidth="75.0" text="Betalplan" />
       </columns>
    </TableView>
-   <Button layoutX="640.0" layoutY="255.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Historik"/>
-   <Button layoutX="366.0" layoutY="503.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="120.0"
-           text="Spara ändringar"/>
-   <Button layoutX="803.0" layoutY="256.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="86.0"
-           text="Skapa Konto"/>
-   <Button layoutX="266.0" layoutY="503.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="94.0"
-           text="Bevilja nytt lån"/>
-   <Label layoutX="498.0" layoutY="298.0" prefHeight="20.0" prefWidth="470.0" style="-fx-background-color: #2680CD;"
-          text="Transaktionshistorik" textFill="WHITE">
+   <Button layoutX="640.0" layoutY="255.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Historik" />
+   <Button layoutX="366.0" layoutY="503.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="120.0" text="Spara ändringar" />
+   <Button layoutX="14.0" layoutY="214.0" mnemonicParsing="false" onAction="#createNewAccountOrLoan" prefHeight="26.0" prefWidth="102.0" text="Nytt Konto/Lån" />
+   <Label layoutX="498.0" layoutY="298.0" prefHeight="20.0" prefWidth="470.0" style="-fx-background-color: #2680CD;" text="Transaktionshistorik" textFill="WHITE">
       <font>
-         <Font size="14.0"/>
+         <Font size="14.0" />
       </font>
    </Label>
    <TableView layoutX="498.0" layoutY="327.0" prefHeight="168.0" prefWidth="470.0">
       <columns>
-         <TableColumn prefWidth="113.60003662109375" text="Datum"/>
-         <TableColumn prefWidth="118.4000244140625" text="Transaktionstyp"/>
-         <TableColumn prefWidth="116.800048828125" text="Belopp"/>
-         <TableColumn prefWidth="92.7999267578125" text="Konto"/>
+         <TableColumn prefWidth="113.60003662109375" text="Datum" />
+         <TableColumn prefWidth="118.4000244140625" text="Transaktionstyp" />
+         <TableColumn prefWidth="116.800048828125" text="Belopp" />
+         <TableColumn prefWidth="92.7999267578125" text="Konto" />
       </columns>
    </TableView>
-   <DatePicker layoutX="733.0" layoutY="295.0" prefHeight="0.0" prefWidth="86.0"/>
-   <DatePicker layoutX="881.0" layoutY="295.0" prefHeight="0.0" prefWidth="86.0"/>
-   <Label layoutX="693.0" layoutY="298.0" prefHeight="20.0" prefWidth="33.0" style="-fx-background-color: #2680CD;"
-          text="Från" textFill="WHITE">
+   <DatePicker layoutX="733.0" layoutY="295.0" prefHeight="0.0" prefWidth="86.0" />
+   <DatePicker layoutX="881.0" layoutY="295.0" prefHeight="0.0" prefWidth="86.0" />
+   <Label layoutX="693.0" layoutY="298.0" prefHeight="20.0" prefWidth="33.0" style="-fx-background-color: #2680CD;" text="Från" textFill="WHITE">
       <font>
-         <Font size="14.0"/>
+         <Font size="14.0" />
       </font>
    </Label>
-   <Label layoutX="846.0" layoutY="298.0" prefHeight="20.0" prefWidth="33.0" style="-fx-background-color: #2680CD;"
-          text="Till" textFill="WHITE">
+   <Label layoutX="846.0" layoutY="298.0" prefHeight="20.0" prefWidth="33.0" style="-fx-background-color: #2680CD;" text="Till" textFill="WHITE">
       <font>
-         <Font size="14.0"/>
+         <Font size="14.0" />
       </font>
    </Label>
-   <Label layoutX="498.0" layoutY="26.0" prefHeight="80.0" prefWidth="470.0" style="-fx-background-color: #F6F6F6;"
-          textFill="WHITE">
+   <Label layoutX="498.0" layoutY="26.0" prefHeight="80.0" prefWidth="470.0" style="-fx-background-color: #F6F6F6;" textFill="WHITE">
       <font>
-         <Font size="14.0"/>
+         <Font size="14.0" />
       </font>
    </Label>
-   <TextField layoutX="619.0" layoutY="56.0" prefHeight="26.0" prefWidth="304.0" promptText="Sök efter kund"/>
+   <TextField layoutX="619.0" layoutY="56.0" prefHeight="26.0" prefWidth="304.0" promptText="Sök efter kund" />
    <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="926.0" layoutY="57.0">
-      <Image url="@../../Resources/searchicon.jpg"/>
+      <Image url="@../../Resources/searchicon.jpg" />
    </ImageView>
-   <Label layoutX="212.0" layoutY="26.0" prefHeight="80.0" prefWidth="188.0" style="-fx-background-color: #F6F6F6;"
-          textFill="WHITE">
+   <Label layoutX="212.0" layoutY="26.0" prefHeight="80.0" prefWidth="188.0" style="-fx-background-color: #F6F6F6;" textFill="WHITE">
       <font>
-         <Font size="14.0"/>
+         <Font size="14.0" />
       </font>
    </Label>
 </AnchorPane>

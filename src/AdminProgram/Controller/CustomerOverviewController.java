@@ -1,6 +1,7 @@
 package AdminProgram.Controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 
 public class CustomerOverviewController {
@@ -8,5 +9,9 @@ public class CustomerOverviewController {
     }
 
     public void remove(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private void createNewAccountOrLoan(ActionEvent actionEvent) {
     }
 }
