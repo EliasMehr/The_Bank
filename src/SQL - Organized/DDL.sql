@@ -17,6 +17,7 @@ CREATE TABLE `customer` (
   `account_id` INT NOT NULL AUTO_INCREMENT,
   `account_number` INT UNIQUE NOT NULL,
   -- `name` VARCHAR(45) NOT NULL,
+  `account_type` enum('Person-konto','Sparkonto','KF-Konto','ISK-Konto'),
   `amount` DECIMAL(15,2) NOT NULL DEFAULT 0,
   `customer_id` INT NULL,
   `interest_rate` DECIMAL (4,2) NOT NULL DEFAULT 1,
@@ -53,13 +54,13 @@ INSERT INTO customer (first_name, last_name, personal_number, PIN) VALUES ('Vale
                                                          ('Johan','÷zbek','19951229-5221',2468),
                                                          ('Elias', 'Mehr', '19900304-1234', 3696);
 
-INSERT INTO account (account_number, amount, interest_rate, customer_id)
+INSERT INTO account (account_number, amount, interest_rate, customer_id, account_type)
 
-VALUES (34563457, 30457,1.5,1),
-       (24540965, 4231,2.1,2),
-       (14569736, 2000,1.75,3),
-       (12345574, 80000,1.93,4),
-       (0987654, 30000,2.15,1);
+VALUES (34563457, 30457,1.5,1,1),
+       (24540965, 4231,2.1,2,2),
+       (14569736, 2000,1.75,3,3),
+       (12345574, 80000,1.93,4,4),
+       (0987654, 30000,2.15,1,2);
 
 INSERT INTO loan ( amount, interest_rate, monthly_payment, customer_id)
 

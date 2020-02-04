@@ -9,7 +9,7 @@ public class CustomerRepository {
 
     private static final String url = "jdbc:mysql://localhost:3306/the_bank";
 
-    public int login(String personalNumber, int pin) {
+    public static int login(String personalNumber, int pin) {
         int customerId = 0;
 
         try (Connection connection = DriverManager.getConnection(url, "root", "root")) {

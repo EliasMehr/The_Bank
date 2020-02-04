@@ -54,7 +54,7 @@ CREATE TRIGGER after_transaction_INSERT
 // DELIMITER ;
 
 Delimiter // 
-create procedure create_account(IN param_customer_id INT, IN param_amount DECIMAL, IN param_account_number INT)
+create procedure create_account(IN param_customer_id INT, IN param_account_type INT, IN param_amount DECIMAL, IN param_account_number INT)
 Begin
 DECLARE EXIT HANDLER FOR SQLException
 	Begin
@@ -62,18 +62,18 @@ DECLARE EXIT HANDLER FOR SQLException
              Resignal;
          END;
          start transaction;
-         INSERT INTO Account(account_number, amount, customer_id) VALUES (param_account_number, param_amount, param_customer_id);
+         INSERT INTO Account(account_number, amount, customer_id, account_type) VALUES (param_account_number, param_amount, param_customer_id, param_account_type);
          commit;
 End //
 Delimiter ;
 
 DELIMITER //
-    CREATE PROCEDURE changeSavingsAccountInterest(IN account_IDX INT, IN newInterestRate DECIMAL(5,3))
+    CREATE PROCEDURE changeAccountInterest(IN account_IDX INT, IN newInterestRate DECIMAL(5,3))
         begin
             DECLARE EXIT HANDLER FOR SQLEXCEPTION
                 begin
                     rollback;
-                    SELECT 'An Error has occurred';
+                    Resignal;
                 end ;
             start transaction;
 			UPDATE account SET interest_rate = newInterestRate WHERE account.account_id = account_IDX;
@@ -84,7 +84,7 @@ DELIMITER //
 Delimiter //
 create procedure account_overview(param_customer_id INT)
 Begin
-	Select account.account_id as id, account.account_number as account, account.amount as amount, account.interest_rate as rate,
+	Select account.account_id as id, account.account_number as account, account.account_type as type, account.amount as amount, account.interest_rate as rate,
 	concat(customer.first_name, ' ',customer.last_name) as Owner from account
 	left outer join customer on customer.customer_id = account.customer_id where account.customer_id = param_customer_id;
 End //

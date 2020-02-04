@@ -22,9 +22,10 @@ public class AccountRepository {
                 Account account = new Account();
                 account.setAccountId(resultSet.getInt(1));
                 account.setAccountNumber(resultSet.getInt(2));
-                account.setAmount(resultSet.getDouble(3));
-                account.setCustomerId(resultSet.getInt(4));
-                account.setInterestRate(resultSet.getInt(5));
+                account.setAccountType(resultSet.getString(3));
+                account.setAmount(resultSet.getDouble(4));
+                account.setCustomerId(resultSet.getInt(5));
+                account.setInterestRate(resultSet.getInt(6));
                 customer.getAccounts().add(account);
             }
 

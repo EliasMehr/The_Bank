@@ -10,7 +10,8 @@ public class Account {
     private int customerId;
     private double amount;
     private double interestRate;
-    private NumberFormat currency = NumberFormat.getCurrencyInstance();
+    private String accountType;
+
 
     private List<Transaction> transactions = new ArrayList<>();
 
@@ -62,8 +63,17 @@ public class Account {
         this.transactions = transactions;
     }
 
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
+    }
+
     @Override
     public String toString() {
-        return accountNumber + "(" + currency.format(amount) + ")";
+        NumberFormat currency = NumberFormat.getCurrencyInstance();
+        return accountType + "(" + currency.format(amount) + ")";
     }
 }
