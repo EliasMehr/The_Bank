@@ -1,6 +1,7 @@
 package CustomerProgram.Controller;
 
 import CustomerProgram.CustomerMain;
+import CustomerProgram.CustomerViews;
 import Model.Account;
 import Model.Customer;
 import Model.Loan;
@@ -140,5 +141,9 @@ public class AccountsOverviewController {
     @FXML
     private void validateAmountInput(KeyEvent keyEvent) {
 
+    }
+
+    public void signOut(ActionEvent actionEvent) {
+        CustomerViews.changeScene(CustomerViews.View.LOGIN);
     }
 }

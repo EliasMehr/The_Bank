@@ -38,11 +38,10 @@
    </Label>
    <TableView fx:id="loansOverview" layoutX="497.0" layoutY="347.0" prefHeight="146.0" prefWidth="470.0">
       <columns>
-         <TableColumn fx:id="loanTypeCol" editable="false" prefWidth="75.0" text="Typ" />
          <TableColumn fx:id="loanAmountCol" editable="false" prefWidth="119.20001220703125" text="Lånebelopp" />
-         <TableColumn fx:id="loanMortgageCol" editable="false" prefWidth="92.800048828125" text="Ammortering" />
-         <TableColumn fx:id="loanInterestCol" prefWidth="60.0" text="Ränta" />
-         <TableColumn fx:id="loanPaymentPlanCol" prefWidth="75.0" text="Betalplan" />
+         <TableColumn fx:id="loanMortgageCol" editable="false" prefWidth="110.0" text="Amortering" />
+         <TableColumn fx:id="loanInterestCol" prefWidth="53.0" text="Ränta" />
+         <TableColumn fx:id="loanPaymentPlanCol" prefWidth="65.0" text="Betalplan" />
       </columns>
    </TableView>
    <Label layoutX="498.0" layoutY="116.0" prefHeight="20.0" prefWidth="470.0" style="-fx-background-color: #2680CD;" text="Transaktionshistorik" textFill="WHITE">
@@ -88,4 +87,5 @@
          <Font name="System Bold" size="16.0" />
       </font>
    </Label>
+   <Button fx:id="signOut_btn" layoutX="881.0" layoutY="54.0" mnemonicParsing="false" onAction="#signOut" prefHeight="25.0" prefWidth="74.0" text="Logga ut" />
 </AnchorPane>
