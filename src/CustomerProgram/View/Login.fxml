@@ -11,8 +11,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="863.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CustomerProgram.Controller.LoginController">
    <children>
-      <PasswordField fx:id="passwordField" layoutX="624.0" layoutY="176.0" onAction="#attemptLogin" promptText="Ange pin" />
-      <TextField fx:id="usernameField" layoutX="624.0" layoutY="128.0" onAction="#attemptLogin" promptText="Ange personnummer" />
+      <PasswordField fx:id="passwordField" layoutX="624.0" layoutY="176.0" onAction="#attemptLogin" promptText="Ange pin" text="3696" />
+      <TextField fx:id="usernameField" layoutX="624.0" layoutY="128.0" onAction="#attemptLogin" promptText="Ange personnummer" text="19900304-1234" />
       <Label layoutX="624.0" layoutY="159.0" text="PIN" />
       <Label layoutX="624.0" layoutY="111.0" text="Personnummer" />
       <ImageView fitHeight="421.0" fitWidth="537.0" pickOnBounds="true" preserveRatio="true">

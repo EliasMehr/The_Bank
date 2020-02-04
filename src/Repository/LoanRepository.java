@@ -1,5 +1,6 @@
 package Repository;
 
+import AdminProgram.AdminMain;
 import Model.Customer;
 import Model.Loan;
 
@@ -11,7 +12,7 @@ public class LoanRepository {
 
     private static final String url = "jdbc:mysql://localhost:3306/the_bank";
 
-    public int calculatePaymentPlan(int loanId){
+    public int calculatePaymentPlan(int loanId) {
         try (Connection connection = DriverManager.getConnection(url, "root", "root")) {
             PreparedStatement preparedStatement = connection.prepareStatement("{ call calculatePaymentPlan(?) }");
             preparedStatement.setInt(1, loanId);
@@ -48,7 +49,7 @@ public class LoanRepository {
         return true;
     }
 
-    public boolean getLoans(Customer customer) {
+    public static boolean getLoans(Customer customer) {
         PreparedStatement preparedStatement = null;
 
         try (Connection connection = DriverManager.getConnection(url, "root", "root")) {
@@ -88,13 +89,13 @@ public class LoanRepository {
             return false;
         }
         return true;
-}
+    }
 
 
     public boolean changeMonthlyPayment(int loanId, double newMonthlyPayment) {
         PreparedStatement preparedStatement = null;
 
-        try(Connection connection = DriverManager.getConnection(url, "root", "root")) {
+        try (Connection connection = DriverManager.getConnection(url, "root", "root")) {
             preparedStatement = connection.prepareStatement("{ call changeMonthlyPayment(?,?) }");
             preparedStatement.setInt(1, loanId);
             preparedStatement.setDouble(2, newMonthlyPayment);

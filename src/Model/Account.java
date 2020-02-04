@@ -1,22 +1,24 @@
 package Model;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Account {
     private int accountId;
-    private String accountNumber;
+    private int accountNumber;
     private int customerId;
     private double amount;
     private double interestRate;
+    private NumberFormat currency = NumberFormat.getCurrencyInstance();
 
     private List<Transaction> transactions = new ArrayList<>();
 
-    public String getAccountNumber() {
+    public int getAccountNumber() {
         return accountNumber;
     }
 
-    public void setAccountNumber(String accountNumber) {
+    public void setAccountNumber(int accountNumber) {
         this.accountNumber = accountNumber;
     }
 
@@ -58,5 +60,10 @@ public class Account {
 
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
+    }
+
+    @Override
+    public String toString() {
+        return accountNumber + "(" + currency.format(amount) + ")";
     }
 }

@@ -1,11 +1,12 @@
 package Model;
 
-public class Loan{
+public class Loan {
     private int loanId;
     private double amount;
     private double interestRate;
     private double monthlyPayment;
     private String name;
+
 
     public int getLoanId() {
         return loanId;
