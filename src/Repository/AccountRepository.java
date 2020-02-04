@@ -4,12 +4,14 @@ import Model.Account;
 import Model.Customer;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class AccountRepository {
 
     private static final String url = "jdbc:mysql://localhost:3306/the_bank";
 
     public static boolean getAccounts(Customer customer) {
+        customer.getAccounts().clear();
         PreparedStatement preparedStatement = null;
 
         try (Connection connection = DriverManager.getConnection(url, "root", "root")) {
