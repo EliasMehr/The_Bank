@@ -22,6 +22,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -30,6 +31,7 @@ import java.util.Date;
 
 public class AccountsOverviewController {
 
+    public TableColumn<Account, String> accountTypeCol;
     @FXML
     private TableView<Account> accountsOverview;
     @FXML
@@ -47,7 +49,7 @@ public class AccountsOverviewController {
     @FXML
     private TableColumn<Loan, String> loanInterestCol;
     @FXML
-    private TableColumn loanPaymentPlanCol;
+    private TableColumn<Loan, String> loanPaymentPlanCol;
     @FXML
     private TableView<Transaction> transactionHistory;
     @FXML
@@ -96,12 +98,13 @@ public class AccountsOverviewController {
 
     private void populateLoansOverview() {
         LoanRepository.getLoans(customer);
+        DecimalFormat formatDoubles = new DecimalFormat("#.#");
         NumberFormat currency = NumberFormat.getCurrencyInstance();
 
         loanAmountCol.setCellValueFactory(loan -> new SimpleStringProperty(currency.format(loan.getValue().getAmount())));
         loanInterestCol.setCellValueFactory(loan -> new SimpleStringProperty(loan.getValue().getInterestRate() + "%"));
-        loanMortgageCol.setCellValueFactory(loan -> new SimpleStringProperty(currency.format(loan.getValue().getMonthlyPayment()) + "/Mån"));
-
+        loanMortgageCol.setCellValueFactory(loan -> new SimpleStringProperty(currency.format(loan.getValue().getMortagePlan()) + "/Mån"));
+        loanPaymentPlanCol.setCellValueFactory(loan -> new SimpleStringProperty(formatDoubles.format(loan.getValue().getMonthlyPayment()) + " År"));
         loansOverview.setItems(FXCollections.observableList(customer.getLoans()));
     }
 
@@ -112,6 +115,8 @@ public class AccountsOverviewController {
         accountNumCol.setCellValueFactory(account -> new SimpleIntegerProperty(account.getValue().getAccountNumber()).asObject());
         accountAmountCol.setCellValueFactory(account -> new SimpleStringProperty(currency.format(account.getValue().getAmount())));
         accountInterestCol.setCellValueFactory(account -> new SimpleStringProperty(account.getValue().getInterestRate() + "%"));
+        accountTypeCol.setCellValueFactory(account -> new SimpleStringProperty(account.getValue().getAccountType()));
+
 
         accountsOverview.setItems(FXCollections.observableList(customer.getAccounts()));
     }

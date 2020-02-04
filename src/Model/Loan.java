@@ -47,4 +47,8 @@ public class Loan {
     public void setName(String name) {
         this.name = name;
     }
+
+    public double getMortagePlan(){
+        return amount / (monthlyPayment * 12) * (1 + 0.01 * interestRate);
+    }
 }
