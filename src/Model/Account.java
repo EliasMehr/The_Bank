@@ -5,18 +5,18 @@ import java.util.List;
 
 public class Account {
     private int accountId;
-    private String accountNumber;
+    private int accountNumber;
     private int customerId;
     private double amount;
     private double interestRate;
 
     private List<Transaction> transactions = new ArrayList<>();
 
-    public String getAccountNumber() {
+    public int getAccountNumber() {
         return accountNumber;
     }
 
-    public void setAccountNumber(String accountNumber) {
+    public void setAccountNumber(int accountNumber) {
         this.accountNumber = accountNumber;
     }
 

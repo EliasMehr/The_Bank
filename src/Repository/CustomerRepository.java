@@ -8,7 +8,7 @@ public class CustomerRepository {
 
     private static final String url = "jdbc:mysql://localhost:3306/the_bank";
 
-    public int login(String personalNumber, int pin) {
+    public static int login(String personalNumber, int pin) {
         int customerId = 0;
 
         try (Connection connection = DriverManager.getConnection(url, "root", "root")) {
@@ -30,7 +30,7 @@ public class CustomerRepository {
         return customerId;
     }
 
-    public Customer getCustomerById(int customerId) {
+    public static Customer getCustomerById(int customerId) {
         Customer customer = new Customer();
 
         try (Connection connection = DriverManager.getConnection(url, "root", "root")) {
@@ -54,10 +54,10 @@ public class CustomerRepository {
         return customer;
     }
 
-    public Customer getCustomerByPersonalNumber(String personalNumber) {
+    public static Customer getCustomerByPersonalNumber(String personalNumber) {
         Customer customer = new Customer();
 
-        try(Connection connection = DriverManager.getConnection(url, "root", "root")) {
+        try (Connection connection = DriverManager.getConnection(url, "root", "root")) {
             PreparedStatement preparedStatement = DBConnection.getConnection().prepareStatement("SELECT * FROM customer WHERE personal_number = ?");
             preparedStatement.setString(1, personalNumber);
 
@@ -84,7 +84,7 @@ public class CustomerRepository {
 
     public boolean changePersonalInfo(Customer customer, String firstName, String lastName, String personalNumber, int pin) {
         PreparedStatement preparedStatement = null;
-        try(Connection connection = DriverManager.getConnection(url, "root", "root")) {
+        try (Connection connection = DriverManager.getConnection(url, "root", "root")) {
             preparedStatement = connection.prepareStatement("{ call change_personal_info(?,?,?,?,?) }");
             preparedStatement.setInt(1, customer.getCustomerId());
             preparedStatement.setString(2, firstName);
@@ -108,7 +108,7 @@ public class CustomerRepository {
     public boolean addCustomer(String firstName, String lastName, String personalNumber, int pin) {
 
         PreparedStatement preparedStatement = null;
-        try(Connection connection = DriverManager.getConnection(url, "root", "root")) {
+        try (Connection connection = DriverManager.getConnection(url, "root", "root")) {
             preparedStatement = connection.prepareStatement("{ call add_customer(?,?,?,?) }");
             preparedStatement.setString(1, firstName);
             preparedStatement.setString(2, lastName);
@@ -131,27 +131,26 @@ public class CustomerRepository {
         }
     }
 
-    public boolean deleteCustomer(int customerId){
+    public boolean deleteCustomer(int customerId) {
 
-        try(Connection connection = DriverManager.getConnection(url, "root", "root")){
+        try (Connection connection = DriverManager.getConnection(url, "root", "root")) {
 
-        PreparedStatement preparedStatement = connection.prepareStatement("Delete from customer where customer_id = ?");
-        preparedStatement.setInt(1, customerId);
+            PreparedStatement preparedStatement = connection.prepareStatement("Delete from customer where customer_id = ?");
+            preparedStatement.setInt(1, customerId);
 
-        int rowsUpdated = preparedStatement.executeUpdate();
+            int rowsUpdated = preparedStatement.executeUpdate();
 
-        if (rowsUpdated >= 1) {
-            System.out.println("Successfully deleted customer");
-            return true;
-        } else {
-            System.out.println("Customer with that ID does not exist");
-            return false;
-        }
-        }catch (SQLException e){
+            if (rowsUpdated >= 1) {
+                System.out.println("Successfully deleted customer");
+                return true;
+            } else {
+                System.out.println("Customer with that ID does not exist");
+                return false;
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
-
 
 }

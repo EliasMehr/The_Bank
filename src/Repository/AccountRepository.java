@@ -9,7 +9,7 @@ public class AccountRepository {
 
     private static final String url = "jdbc:mysql://localhost:3306/the_bank";
 
-    public boolean getAccounts(Customer customer) {
+    public static boolean getAccounts(Customer customer) {
         PreparedStatement preparedStatement = null;
 
         try (Connection connection = DriverManager.getConnection(url, "root", "root")) {
@@ -21,7 +21,7 @@ public class AccountRepository {
             while (resultSet.next()) {
                 Account account = new Account();
                 account.setAccountId(resultSet.getInt(1));
-                account.setAccountNumber(resultSet.getString(2));
+                account.setAccountNumber(resultSet.getInt(2));
                 account.setAmount(resultSet.getDouble(3));
                 account.setCustomerId(resultSet.getInt(4));
                 account.setInterestRate(resultSet.getInt(5));
