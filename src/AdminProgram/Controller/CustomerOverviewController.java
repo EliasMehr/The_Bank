@@ -26,6 +26,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.stream.IntStream;
 
 public class CustomerOverviewController {
     @FXML
@@ -74,12 +75,20 @@ public class CustomerOverviewController {
     private DatePicker fromDateSelector;
     @FXML
     private DatePicker toDateSelector;
+    @FXML
+    private ChoiceBox accountInterestRateSelector;
 
     private Customer customer;
 
     @FXML
     private void createNewAccountOrLoan(ActionEvent actionEvent) {
+        AdminViews.changeScene(AdminViews.View.NEW_ACCOUNT_OR_LOAN);
     }
+
+    public void initialize(){
+        IntStream.rangeClosed(1,10).boxed().forEach(accountInterestRateSelector.getItems()::add);
+    }
+
 
     @FXML
     private void findCustomer() {
@@ -205,6 +214,7 @@ public class CustomerOverviewController {
 
     @FXML
     private void changeAccountInterest(ActionEvent actionEvent) {
+
     }
 
     @FXML
