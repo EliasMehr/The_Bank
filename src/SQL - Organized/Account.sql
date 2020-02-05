@@ -56,7 +56,7 @@ CREATE TRIGGER after_transaction_INSERT
 
 DROP PROCEDURE IF EXISTS create_account;
 Delimiter // 
-create procedure create_account(IN param_customer_id INT, IN param_account_type INT, IN param_amount DECIMAL, IN param_account_number INT, IN param_account_type)
+create procedure create_account(IN param_customer_id INT, IN param_account_type INT, IN param_amount DECIMAL, IN param_account_number INT, IN param_account_interest DECIMAL)
 Begin
 DECLARE EXIT HANDLER FOR SQLException
 	Begin
@@ -64,7 +64,7 @@ DECLARE EXIT HANDLER FOR SQLException
              Resignal;
          END;
          start transaction;
-         INSERT INTO Account(account_number, amount, customer_id, account_type) VALUES (param_account_number, param_amount, param_customer_id, param_account_type);
+         INSERT INTO Account(account_number, amount, customer_id, account_type, interest_rate) VALUES (param_account_number, param_amount, param_customer_id, param_account_type, param_account_interest);
          commit;
 End //
 Delimiter ;

@@ -63,6 +63,31 @@ public class AccountRepository {
         }
     }
 
+    public static boolean deposit(int accountId, double amount) {
+
+        try (Connection connection = DriverManager.getConnection(url, "root", "root")) {
+            CallableStatement callableStatement = connection.prepareCall("{ call transactionEvent(?,?) }");
+            callableStatement.setInt(1, accountId);
+            callableStatement.setDouble(2, amount);
+
+            boolean hadResult = callableStatement.execute();
+
+            if (hadResult) {
+                ResultSet resultSet = callableStatement.getResultSet();
+                if (resultSet.next()) {
+                    CustomerMain.showErrorMessage(resultSet.getString("embarrassing"), "Uttag ej möjligt");
+                    return false;
+                }
+            }
+
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public static boolean createAccount(int customerId, double amount, int accountNumber, String accountType) {
         PreparedStatement preparedStatement = null;
 
@@ -108,7 +133,7 @@ public class AccountRepository {
         PreparedStatement preparedStatement = null;
 
         try(Connection connection = DriverManager.getConnection(url, "root", "root")){
-            preparedStatement = connection.prepareStatement("{ call changeSavingsAccountInterest(?,?) }");
+            preparedStatement = connection.prepareStatement("{ call changeAccountInterest(?,?) }");
             preparedStatement.setInt(1, accountId);
             preparedStatement.setDouble(2, newInterestRate);
             preparedStatement.execute();

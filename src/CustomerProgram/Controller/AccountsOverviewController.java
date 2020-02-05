@@ -88,6 +88,7 @@ public class AccountsOverviewController {
     }
 
     private void populateTransactionHistory(Account currentAccount) {
+        transactionHistory.getItems().clear();
         NumberFormat currency = NumberFormat.getCurrencyInstance();
         TransactionRepository.getTransactions(currentAccount, fromDateSelector.getValue(), toDateSelector.getValue());
 

@@ -78,7 +78,7 @@ public class LoanRepository {
         return true;
     }
 
-    public boolean changeInterestRate(int loanId, double newInterestRate) {
+    public static boolean changeInterestRate(int loanId, double newInterestRate) {
 
         try (Connection connection = DriverManager.getConnection(url, "root", "root")) {
             PreparedStatement preparedStatement = connection.prepareStatement("{ call changeInterestRate(?,?) }");
@@ -94,13 +94,13 @@ public class LoanRepository {
     }
 
 
-    public boolean changeMonthlyPayment(int loanId, double newMonthlyPayment) {
+    public static boolean changePaymentPlan(int loanId, double newPaymentPlan) {
         PreparedStatement preparedStatement = null;
 
         try (Connection connection = DriverManager.getConnection(url, "root", "root")) {
-            preparedStatement = connection.prepareStatement("{ call changeMonthlyPayment(?,?) }");
+            preparedStatement = connection.prepareStatement("{ call changePaymentPlan(?,?) }");
             preparedStatement.setInt(1, loanId);
-            preparedStatement.setDouble(2, newMonthlyPayment);
+            preparedStatement.setDouble(2, newPaymentPlan);
             preparedStatement.execute();
             System.out.println("Successfully changed monthly payment");
         } catch (Exception e) {
