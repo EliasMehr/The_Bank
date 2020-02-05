@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="356.0"
-            prefWidth="657.0" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="AdminProgram.Controller.NewAccountOrLoanController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="356.0" prefWidth="657.0" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="AdminProgram.Controller.NewAccountOrLoanController">
    <ImageView fitHeight="507.0" fitWidth="676.0" layoutX="-19.0" layoutY="-96.0" pickOnBounds="true"
               preserveRatio="true">
       <Image url="@../../Resources/storyboard.gif"/>

@@ -3,9 +3,7 @@ package Repository;
 import CustomerProgram.CustomerMain;
 import Model.Account;
 import Model.Customer;
-
 import java.sql.*;
-import java.util.ArrayList;
 
 public class AccountRepository {
 

@@ -78,10 +78,6 @@ public class CustomerOverviewController {
     private Customer customer;
 
     @FXML
-    private void createNewAccountOrLoan(ActionEvent actionEvent) {
-    }
-
-    @FXML
     private void findCustomer() {
          customer = CustomerRepository.getCustomerByPersonalNumber(searchCustomerField.getText());
         if(customer == null)
@@ -215,5 +211,14 @@ public class CustomerOverviewController {
     @FXML
     private void addCustomer(MouseEvent mouseEvent) {
         AdminViews.changeScene(AdminViews.View.NEW_CUSTOMER);
+    }
+
+    @FXML
+    private void createNewAccountOrLoan(ActionEvent actionEvent) {
+        if (AdminMain.customerIdentity == 0){
+            AdminMain.showErrorMessage("Du har inte valt någon kund", "Ingen kund vald!");
+        } else {
+            AdminViews.changeScene(AdminViews.View.NEW_ACCOUNT_OR_LOAN);
+        }
     }
 }
