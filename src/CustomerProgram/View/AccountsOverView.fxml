@@ -94,5 +94,4 @@
          <Font size="14.0" />
       </font>
    </Label>
-   <Button layoutX="762.0" layoutY="54.0" mnemonicParsing="false" onAction="#updateTransactionHistory" text="Uppdatera historik" />
 </AnchorPane>

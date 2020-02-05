@@ -92,6 +92,13 @@ public class CustomerOverviewController {
             customer = CustomerRepository.getCustomerById(AdminMain.customerIdentity);
             loadCustomerData();
         }
+
+        //Listener to update transaction history whenever new account is selected
+        accountsOverview.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                populateTransactionHistory(newSelection);
+            }
+        });
     }
 
 

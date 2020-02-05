@@ -85,6 +85,13 @@ public class AccountsOverviewController {
         populateWithdrawalAccountSelector();
         populateTransactionHistory(customer.getAccounts().get(0));
 
+
+        //Listener to update transaction history whenever new account is selected
+        accountsOverview.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                populateTransactionHistory(newSelection);
+            }
+        });
     }
 
     private void populateTransactionHistory(Account currentAccount) {
