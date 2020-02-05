@@ -16,6 +16,7 @@ public class AdminMain extends Application {
         Parent root = FXMLLoader.load(AdminMain.class.getResource("View/CustomerOverView.fxml"));
         primaryStage.setTitle("The Bank - Customer Portal");
         primaryStage.setScene(new Scene(root));
+        AdminViews.stage = primaryStage;
         primaryStage.show();
     }
 

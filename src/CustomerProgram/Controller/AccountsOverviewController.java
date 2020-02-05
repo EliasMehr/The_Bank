@@ -20,12 +20,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.chrono.ChronoLocalDateTime;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 public class AccountsOverviewController {
@@ -83,12 +83,12 @@ public class AccountsOverviewController {
         populateAccountsOverview();
         populateLoansOverview();
         populateWithdrawalAccountSelector();
-        populateTransactionHistory();
+        populateTransactionHistory(customer.getAccounts().get(0));
+
     }
 
-    private void populateTransactionHistory() {
+    private void populateTransactionHistory(Account currentAccount) {
         NumberFormat currency = NumberFormat.getCurrencyInstance();
-        Account currentAccount = customer.getAccounts().get(0);
         TransactionRepository.getTransactions(currentAccount, fromDateSelector.getValue(), toDateSelector.getValue());
 
 
@@ -102,6 +102,7 @@ public class AccountsOverviewController {
                     .then("INSÄTTNING").otherwise("UTTAG");
         });
 
+        transactionHistory.getItems().clear();
         transactionHistory.setItems(FXCollections.observableList(currentAccount.getTransactions()));
     }
 
@@ -164,12 +165,12 @@ public class AccountsOverviewController {
         }
     }
 
-    @FXML
-    private void validateAmountInput(KeyEvent keyEvent) {
-
-    }
-
     public void signOut(ActionEvent actionEvent) {
         CustomerViews.changeScene(CustomerViews.View.LOGIN);
+    }
+
+    @FXML
+    private void updateTransactionHistory() {
+        populateTransactionHistory(accountsOverview.getSelectionModel().getSelectedItem());
     }
 }

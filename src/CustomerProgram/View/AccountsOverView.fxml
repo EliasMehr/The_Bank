@@ -13,7 +13,7 @@
 
 <AnchorPane prefHeight="555.0" prefWidth="983.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CustomerProgram.Controller.AccountsOverviewController">
    <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="33.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-   <TableView fx:id="accountsOverview" layoutX="20.0" layoutY="143.0" prefHeight="168.0" prefWidth="470.0">
+   <TableView fx:id="accountsOverview" layoutX="20.0" layoutY="143.0" onMouseClicked="#updateTransactionHistory" prefHeight="168.0" prefWidth="470.0">
       <columns>
          <TableColumn fx:id="accountNumCol" prefWidth="88.0" text="Kontonummer" />
          <TableColumn fx:id="accountTypeCol" prefWidth="77.60003662109375" text="Typ" />
@@ -58,7 +58,7 @@
          <TableColumn fx:id="transactionAccountCol" prefWidth="92.7999267578125" text="Konto" />
       </columns>
    </TableView>
-   <DatePicker fx:id="fromDateSelector" layoutX="723.0" layoutY="113.0" prefHeight="26.0" prefWidth="96.0" />
+   <DatePicker fx:id="fromDateSelector" layoutX="723.0" layoutY="113.0" onAction="#updateTransactionHistory" prefHeight="26.0" prefWidth="96.0" />
    <Label layoutX="846.0" layoutY="116.0" prefHeight="20.0" prefWidth="33.0" style="-fx-background-color: #2680CD;" text="Till" textFill="WHITE">
       <font>
          <Font size="14.0" />
@@ -79,7 +79,7 @@
          <Font size="20.0" />
       </font>
    </Label>
-   <TextField fx:id="withdrawalAmountField" layoutX="195.0" layoutY="423.0" onAction="#withdrawMoney" onKeyPressed="#validateAmountInput" promptText="Ange belopp" />
+   <TextField fx:id="withdrawalAmountField" layoutX="195.0" layoutY="423.0" onAction="#withdrawMoney" promptText="Ange belopp" />
    <Button layoutX="195.0" layoutY="461.0" mnemonicParsing="false" onAction="#withdrawMoney" text="Ta ut pengar" />
    <ComboBox fx:id="withdrawalAccountSelector" layoutX="194.0" layoutY="376.0" prefWidth="150.0" promptText="Välj konto" />
    <Label fx:id="customerNameLabel" layoutX="33.0" layoutY="53.0" prefHeight="26.0" prefWidth="369.0" text="Välkommen CUSTOMER NAME" textFill="#2680cd">
@@ -88,7 +88,7 @@
       </font>
    </Label>
    <Button fx:id="signOut_btn" layoutX="881.0" layoutY="54.0" mnemonicParsing="false" onAction="#signOut" prefHeight="25.0" prefWidth="74.0" text="Logga ut" />
-   <DatePicker fx:id="toDateSelector" layoutX="871.0" layoutY="113.0" prefHeight="26.0" prefWidth="96.0" />
+   <DatePicker fx:id="toDateSelector" layoutX="871.0" layoutY="113.0" onAction="#updateTransactionHistory" prefHeight="26.0" prefWidth="96.0" />
    <Label layoutX="689.0" layoutY="116.0" prefHeight="20.0" prefWidth="33.0" style="-fx-background-color: #2680CD;" text="Från" textFill="WHITE">
       <font>
          <Font size="14.0" />
