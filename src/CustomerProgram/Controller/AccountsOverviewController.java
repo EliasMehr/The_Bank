@@ -171,6 +171,7 @@ public class AccountsOverviewController {
 
     @FXML
     private void updateTransactionHistory() {
-        populateTransactionHistory(accountsOverview.getSelectionModel().getSelectedItem());
+        if(!accountsOverview.getSelectionModel().isEmpty())
+            populateTransactionHistory(accountsOverview.getSelectionModel().getSelectedItem());
     }
 }
