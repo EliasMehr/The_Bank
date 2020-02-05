@@ -219,7 +219,16 @@ public class CustomerOverviewController {
 
     @FXML
     private void deleteAccount(ActionEvent actionEvent) {
-
+        if (AdminMain.customerIdentity != 0) {
+            Alert deleteCustomerAlert = new Alert(Alert.AlertType.CONFIRMATION, "Ta bort kund " + customer.getFirstName() + " "+ customer.getLastName() + "?", ButtonType.OK, ButtonType.CANCEL);
+            deleteCustomerAlert.showAndWait();
+            if(deleteCustomerAlert.getResult() == ButtonType.OK){
+                CustomerRepository.deleteCustomer(customer.getCustomerId());
+                AdminMain.showInformationMessage("Kund borttagen från registret", "Farväl kära kund");
+                AdminMain.customerIdentity = 0;
+                AdminViews.changeScene(AdminViews.View.CUSTOMER_OVERVIEW);
+            }
+        }
     }
 
     @FXML
