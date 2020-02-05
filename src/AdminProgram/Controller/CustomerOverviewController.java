@@ -242,6 +242,7 @@ public class CustomerOverviewController {
             if (isSuccessfulDeposit) {
                 CustomerMain.showInformationMessage(depositAmount + " insatt på kontot", "Insättning genomförd");
                 populateAccountsOverview();
+                populateTransactionHistory(account);
             }
         }
     }
@@ -267,6 +268,7 @@ public class CustomerOverviewController {
             if (isSuccessfulWithdrawal) {
                 CustomerMain.showInformationMessage(withdrawalAmount + " uttaget från kontot", "Uttag genomfört");
                 populateAccountsOverview();
+                populateTransactionHistory(account);
             }
         }
     }

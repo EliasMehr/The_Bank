@@ -154,13 +154,15 @@ public class AccountsOverviewController {
                 return;
             }
 
-            boolean isSuccessfulWithdrawal = AccountRepository.withdraw(withdrawalAccountSelector.getSelectionModel().getSelectedItem().getAccountId(), withdrawalAmmount);
+            Account selectedAccount = withdrawalAccountSelector.getSelectionModel().getSelectedItem();
+            boolean isSuccessfulWithdrawal = AccountRepository.withdraw(selectedAccount.getAccountId(), withdrawalAmmount);
 
             if(isSuccessfulWithdrawal){
                 CustomerMain.showInformationMessage(withdrawalAmmount + " uttaget från kontot", "Uttag genomfört");
                 withdrawalAccountSelector.setPromptText("Välj Konto");
                 populateAccountsOverview();
                 populateWithdrawalAccountSelector();
+                populateTransactionHistory(selectedAccount);
             }
         }
     }
