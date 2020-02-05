@@ -83,7 +83,7 @@ public class AccountRepository {
         return true;
     }
 
-    public boolean deleteAccount(int accountId){
+    public static boolean deleteAccount(int accountId){
 
         try (Connection connection = DriverManager.getConnection(url, "root", "root")) {
             PreparedStatement preparedStatement = connection.prepareStatement("Delete from account where account_id = ?");
@@ -104,7 +104,7 @@ public class AccountRepository {
         }
     }
 
-    public boolean changeAccountInterest(int accountId, double newInterestRate) {
+    public static boolean changeAccountInterest(int accountId, double newInterestRate) {
         PreparedStatement preparedStatement = null;
 
         try(Connection connection = DriverManager.getConnection(url, "root", "root")){

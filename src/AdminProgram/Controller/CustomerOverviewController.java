@@ -26,6 +26,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.stream.IntStream;
 
 public class CustomerOverviewController {
     @FXML
@@ -74,8 +75,20 @@ public class CustomerOverviewController {
     private DatePicker fromDateSelector;
     @FXML
     private DatePicker toDateSelector;
+    @FXML
+    private ChoiceBox accountInterestRateSelector;
 
     private Customer customer;
+
+    @FXML
+    private void createNewAccountOrLoan(ActionEvent actionEvent) {
+        AdminViews.changeScene(AdminViews.View.NEW_ACCOUNT_OR_LOAN);
+    }
+
+    public void initialize(){
+        IntStream.rangeClosed(1,10).boxed().forEach(accountInterestRateSelector.getItems()::add);
+    }
+
 
     @FXML
     private void findCustomer() {
@@ -201,24 +214,25 @@ public class CustomerOverviewController {
 
     @FXML
     private void changeAccountInterest(ActionEvent actionEvent) {
+
     }
 
     @FXML
     private void deleteAccount(ActionEvent actionEvent) {
-
+        if (AdminMain.customerIdentity != 0) {
+            Alert deleteCustomerAlert = new Alert(Alert.AlertType.CONFIRMATION, "Ta bort kund " + customer.getFirstName() + " "+ customer.getLastName() + "?", ButtonType.OK, ButtonType.CANCEL);
+            deleteCustomerAlert.showAndWait();
+            if(deleteCustomerAlert.getResult() == ButtonType.OK){
+                CustomerRepository.deleteCustomer(customer.getCustomerId());
+                AdminMain.showInformationMessage("Kund borttagen från registret", "Farväl kära kund");
+                AdminMain.customerIdentity = 0;
+                AdminViews.changeScene(AdminViews.View.CUSTOMER_OVERVIEW);
+            }
+        }
     }
 
     @FXML
     private void addCustomer(MouseEvent mouseEvent) {
         AdminViews.changeScene(AdminViews.View.NEW_CUSTOMER);
-    }
-
-    @FXML
-    private void createNewAccountOrLoan(ActionEvent actionEvent) {
-        if (AdminMain.customerIdentity == 0){
-            AdminMain.showErrorMessage("Du har inte valt någon kund", "Ingen kund vald!");
-        } else {
-            AdminViews.changeScene(AdminViews.View.NEW_ACCOUNT_OR_LOAN);
-        }
     }
 }
