@@ -1,29 +1,30 @@
 package Model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Transaction {
     private int transactionId;
     private int accountId;
     private double amount;
-    private LocalDateTime date;
+    private LocalDate date;
 
     public Transaction(){
 
     }
 
-    public Transaction(int transactionId, int accountId, double amount, LocalDateTime date) {
+    public Transaction(int transactionId, int accountId, double amount, LocalDate date) {
         this.transactionId = transactionId;
         this.accountId = accountId;
         this.amount = amount;
         this.date = date;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

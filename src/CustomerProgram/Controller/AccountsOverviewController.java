@@ -24,6 +24,8 @@ import javafx.scene.input.KeyEvent;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDateTime;
+import java.util.stream.Collectors;
 
 public class AccountsOverviewController {
 
@@ -59,9 +61,9 @@ public class AccountsOverviewController {
     @FXML
     private TableColumn<Transaction, Integer> transactionAccountCol;
     @FXML
-    private DatePicker fromDate;
+    private DatePicker fromDateSelector;
     @FXML
-    private DatePicker toDate;
+    private DatePicker toDateSelector;
     @FXML
     private TextField withdrawalAmountField;
     @FXML
@@ -75,7 +77,8 @@ public class AccountsOverviewController {
     public void initialize() {
         customer = CustomerRepository.getCustomerById(CustomerMain.customerIdentity);
         customerNameLabel.setText("Välkommen till The Bank, " + customer.getFirstName() + " " + customer.getLastName());
-
+        fromDateSelector.setValue(LocalDate.now().minusMonths(1));
+        toDateSelector.setValue(LocalDate.now());
         populateAccountsOverview();
         populateLoansOverview();
         populateWithdrawalAccountSelector();
@@ -85,11 +88,13 @@ public class AccountsOverviewController {
 
     private void populateTransactionHistory() {
         NumberFormat currency = NumberFormat.getCurrencyInstance();
-        TransactionRepository.recentMonthTransactions(customer.getAccounts().get(0));
+        Account currentAccount = customer.getAccounts().get(0);
+        TransactionRepository.getTransactions(currentAccount, fromDateSelector.getValue(), toDateSelector.getValue());
+
 
         transactionAmountCol.setCellValueFactory(transaction -> new SimpleStringProperty(currency.format(transaction.getValue().getAmount())));
-        transactionDateCol.setCellValueFactory(transaction -> new SimpleObjectProperty(transaction.getValue().getDate().toLocalDate()));
-        transactionAccountCol.setCellValueFactory(transaction -> new SimpleIntegerProperty(customer.getAccounts().get(0).getAccountNumber()).asObject());
+        transactionDateCol.setCellValueFactory(transaction -> new SimpleObjectProperty(transaction.getValue().getDate()));
+        transactionAccountCol.setCellValueFactory(transaction -> new SimpleIntegerProperty(currentAccount.getAccountNumber()).asObject());
         transactionTypeCol.setCellValueFactory(transaction -> {
             var amount = new SimpleDoubleProperty(transaction.getValue().getAmount());
 
@@ -97,7 +102,7 @@ public class AccountsOverviewController {
                     .then("INSÄTTNING").otherwise("UTTAG");
         });
 
-        transactionHistory.setItems(FXCollections.observableList(customer.getAccounts().get(0).getTransactions()));
+        transactionHistory.setItems(FXCollections.observableList(currentAccount.getTransactions()));
     }
 
     private void populateWithdrawalAccountSelector() {

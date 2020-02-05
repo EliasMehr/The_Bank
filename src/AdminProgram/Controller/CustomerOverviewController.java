@@ -23,7 +23,10 @@ import javafx.scene.input.MouseEvent;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDateTime;
+import java.util.stream.Collectors;
 
 public class CustomerOverviewController {
     @FXML
@@ -87,6 +90,9 @@ public class CustomerOverviewController {
         else{
             refreshCustomerInformationFields();
 
+            fromDateSelector.setValue(LocalDate.now().minusMonths(1));
+            toDateSelector.setValue(LocalDate.now());
+
             populateAccountsOverview();
             populateLoansOverview();
             populateTransactionHistory();
@@ -132,11 +138,13 @@ public class CustomerOverviewController {
 
     private void populateTransactionHistory() {
         NumberFormat currency = NumberFormat.getCurrencyInstance();
-        TransactionRepository.recentMonthTransactions(currentCustomer.getAccounts().get(0));
+        Account currentAccount = currentCustomer.getAccounts().get(0);
+        TransactionRepository.getTransactions(currentAccount, fromDateSelector.getValue(), toDateSelector.getValue());
+
 
         transactionAmountCol.setCellValueFactory(transaction -> new SimpleStringProperty(currency.format(transaction.getValue().getAmount())));
-        transactionDateCol.setCellValueFactory(transaction -> new SimpleObjectProperty(transaction.getValue().getDate().toLocalDate()));
-        transactionAccountCol.setCellValueFactory(transaction -> new SimpleIntegerProperty(currentCustomer.getAccounts().get(0).getAccountNumber()).asObject());
+        transactionDateCol.setCellValueFactory(transaction -> new SimpleObjectProperty(transaction.getValue().getDate()));
+        transactionAccountCol.setCellValueFactory(transaction -> new SimpleIntegerProperty(currentAccount.getAccountNumber()).asObject());
         transactionTypeCol.setCellValueFactory(transaction -> {
             var amount = new SimpleDoubleProperty(transaction.getValue().getAmount());
 
@@ -144,7 +152,7 @@ public class CustomerOverviewController {
                     .then("INSÄTTNING").otherwise("UTTAG");
         });
 
-        transactionHistory.setItems(FXCollections.observableList(currentCustomer.getAccounts().get(0).getTransactions()));
+        transactionHistory.setItems(FXCollections.observableList(currentAccount.getTransactions()));
     }
 
     @FXML
@@ -156,9 +164,14 @@ public class CustomerOverviewController {
             currentCustomer.setLastName(lastNameField.getText());
             currentCustomer.setPersonalNumber(personalNumberField.getText());
             currentCustomer.setPin(newPin);
-            CustomerRepository.changePersonalInfo(currentCustomer, currentCustomer.getFirstName(), currentCustomer.getLastName(), currentCustomer.getPersonalNumber(), currentCustomer.getPin());
-            refreshCustomerInformationFields();
-            CustomerMain.showInformationMessage("Personliga uppgifter uppdaterat för " + currentCustomer.getFirstName() + " " + currentCustomer.getLastName(), "Tadaa!!");
+            boolean isChangedCustomerInfo = CustomerRepository.changePersonalInfo(currentCustomer, currentCustomer.getFirstName(), currentCustomer.getLastName(), currentCustomer.getPersonalNumber(), currentCustomer.getPin());
+            if(isChangedCustomerInfo){
+                refreshCustomerInformationFields();
+                CustomerMain.showInformationMessage("Personliga uppgifter uppdaterat för " + currentCustomer.getFirstName() + " " + currentCustomer.getLastName(), "Tadaa!!");
+            }
+            else {
+                AdminMain.showErrorMessage("Kunde inte uppdatera kunduppgifter", "Något gick fel");
+            }
         } catch (NumberFormatException e) {
             AdminMain.showErrorMessage("PIN får endast innehålla siffror!", "Ogiltig PIN-kod");
         }

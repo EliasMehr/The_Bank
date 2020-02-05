@@ -97,8 +97,7 @@
          <TableColumn fx:id="transactionAccountCol" editable="false" prefWidth="92.7999267578125" text="Konto" />
       </columns>
    </TableView>
-   <DatePicker fx:id="fromDateSelector" layoutX="733.0" layoutY="295.0" prefHeight="0.0" prefWidth="86.0" />
-   <DatePicker fx:id="toDateSelector" layoutX="881.0" layoutY="295.0" prefHeight="0.0" prefWidth="86.0" />
+   <DatePicker fx:id="fromDateSelector" layoutX="725.0" layoutY="295.0" prefHeight="26.0" prefWidth="94.0" />
    <Label layoutX="693.0" layoutY="298.0" prefHeight="20.0" prefWidth="33.0" style="-fx-background-color: #2680CD;" text="Från" textFill="WHITE">
       <font>
          <Font size="14.0" />
@@ -123,4 +122,5 @@
          <Font size="14.0" />
       </font>
    </Label>
+   <DatePicker fx:id="toDateSelector" layoutX="873.0" layoutY="295.0" prefHeight="26.0" prefWidth="94.0" />
 </AnchorPane>

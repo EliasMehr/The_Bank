@@ -59,28 +59,28 @@ public class CustomerRepository {
         Customer customer = new Customer();
 
         try(Connection connection = DriverManager.getConnection(url, "root", "root")) {
-            PreparedStatement preparedStatement = DBConnection.getConnection().prepareStatement("SELECT * FROM customer WHERE personal_number = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM customer WHERE personal_number = ?");
             preparedStatement.setString(1, personalNumber);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            resultSet.next();
+            if(resultSet.next()) {
+                customer.setCustomerId(resultSet.getInt("customer_id"));
+                customer.setFirstName(resultSet.getString("first_name"));
+                customer.setLastName(resultSet.getString("last_name"));
+                customer.setPersonalNumber(resultSet.getString("personal_number"));
+                customer.setPin(resultSet.getInt("PIN"));
 
-            customer.setCustomerId(resultSet.getInt("customer_id"));
-            customer.setFirstName(resultSet.getString("first_name"));
-            customer.setLastName(resultSet.getString("last_name"));
-            customer.setPersonalNumber(resultSet.getString("personal_number"));
-            customer.setPin(resultSet.getInt("PIN"));
+                System.out.println("Successfully retrieved customer");
+                return customer;
+            }
 
 
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
-
-
-        System.out.println("Successfully retrieved customer");
-        return customer;
+        return null;
     }
 
     public static boolean changePersonalInfo(Customer customer, String firstName, String lastName, String personalNumber, int pin) {
@@ -102,7 +102,6 @@ public class CustomerRepository {
             e.printStackTrace();
             return false;
         }
-        System.out.println("Successfully changed personal information");
         return true;
     }
 

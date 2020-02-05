@@ -58,8 +58,7 @@
          <TableColumn fx:id="transactionAccountCol" prefWidth="92.7999267578125" text="Konto" />
       </columns>
    </TableView>
-   <DatePicker fx:id="fromDate" layoutX="733.0" layoutY="113.0" prefHeight="0.0" prefWidth="86.0" />
-   <DatePicker fx:id="toDate" layoutX="881.0" layoutY="113.0" prefHeight="0.0" prefWidth="86.0" />
+   <DatePicker fx:id="fromDateSelector" layoutX="723.0" layoutY="113.0" prefHeight="26.0" prefWidth="96.0" />
    <Label layoutX="846.0" layoutY="116.0" prefHeight="20.0" prefWidth="33.0" style="-fx-background-color: #2680CD;" text="Till" textFill="WHITE">
       <font>
          <Font size="14.0" />
@@ -89,4 +88,10 @@
       </font>
    </Label>
    <Button fx:id="signOut_btn" layoutX="881.0" layoutY="54.0" mnemonicParsing="false" onAction="#signOut" prefHeight="25.0" prefWidth="74.0" text="Logga ut" />
+   <DatePicker fx:id="toDateSelector" layoutX="871.0" layoutY="113.0" prefHeight="26.0" prefWidth="96.0" />
+   <Label layoutX="689.0" layoutY="116.0" prefHeight="20.0" prefWidth="33.0" style="-fx-background-color: #2680CD;" text="Från" textFill="WHITE">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
 </AnchorPane>
