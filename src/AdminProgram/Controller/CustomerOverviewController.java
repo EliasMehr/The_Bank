@@ -30,6 +30,14 @@ import java.util.stream.IntStream;
 
 public class CustomerOverviewController {
     @FXML
+    private TextField accountInterestField;
+    @FXML
+    private TextField accountAmountField;
+    @FXML
+    private TextField loanInterestField;
+    @FXML
+    private TextField loanPaymentPlanField;
+    @FXML
     private TextField searchCustomerField;
     @FXML
     private TextField personalNumberField;
@@ -79,6 +87,7 @@ public class CustomerOverviewController {
     private ChoiceBox accountInterestRateSelector;
 
     private Customer customer;
+
 
     @FXML
     private void createNewAccountOrLoan(ActionEvent actionEvent) {
@@ -200,9 +209,7 @@ public class CustomerOverviewController {
 
     }
 
-    @FXML
-    private void saveLoanChanges(ActionEvent actionEvent) {
-    }
+
 
     @FXML
     private void depositMoney(ActionEvent actionEvent) {
@@ -234,5 +241,26 @@ public class CustomerOverviewController {
     @FXML
     private void addCustomer(MouseEvent mouseEvent) {
         AdminViews.changeScene(AdminViews.View.NEW_CUSTOMER);
+    }
+
+    @FXML
+    private void changeLoanInterest(ActionEvent actionEvent) {
+        if (loansOverview.getSelectionModel().isEmpty()) {
+            AdminMain.showErrorMessage("Du måste välja ett lån", "Kunde inte ändra räntan");
+        }
+        else {
+            try {
+                double newInterestRate = Double.parseDouble(loanInterestField.getText());
+                Loan loan = loansOverview.getSelectionModel().getSelectedItem();
+
+                if(LoanRepository.)
+            } catch (NumberFormatException e) {
+                AdminMain.showErrorMessage("Ränta måste anges som decimaltal", "Kunde inte ändra räntan");
+            }
+        }
+    }
+
+    @FXML
+    private void changeLoanPaymentPlan(ActionEvent actionEvent) {
     }
 }

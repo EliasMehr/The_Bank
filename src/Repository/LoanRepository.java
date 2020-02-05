@@ -31,7 +31,7 @@ public class LoanRepository {
         }
     }
 
-    public boolean createLoan(double amount, double interestRate, double monthlyPayment, int customerId) {
+    public static boolean createLoan(double amount, double interestRate, double monthlyPayment, int customerId) {
         PreparedStatement preparedStatement = null;
 
         try (Connection connection = DriverManager.getConnection(url, "root", "root")) {
@@ -77,7 +77,7 @@ public class LoanRepository {
         return true;
     }
 
-    public boolean changeInterestRate(int loanId, double newInterestRate) {
+    public static boolean changeInterestRate(int loanId, double newInterestRate) {
 
         try (Connection connection = DriverManager.getConnection(url, "root", "root")) {
             PreparedStatement preparedStatement = connection.prepareStatement("{ call changeInterestRate(?,?) }");
@@ -93,7 +93,7 @@ public class LoanRepository {
     }
 
 
-    public boolean changeMonthlyPayment(int loanId, double newMonthlyPayment) {
+    public static boolean changeMonthlyPayment(int loanId, double newMonthlyPayment) {
         PreparedStatement preparedStatement = null;
 
         try (Connection connection = DriverManager.getConnection(url, "root", "root")) {
