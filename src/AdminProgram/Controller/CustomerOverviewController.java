@@ -83,19 +83,15 @@ public class CustomerOverviewController {
     private DatePicker fromDateSelector;
     @FXML
     private DatePicker toDateSelector;
-    @FXML
-    private ChoiceBox accountInterestRateSelector;
+
 
     private Customer customer;
+
 
 
     @FXML
     private void createNewAccountOrLoan(ActionEvent actionEvent) {
         AdminViews.changeScene(AdminViews.View.NEW_ACCOUNT_OR_LOAN);
-    }
-
-    public void initialize(){
-        IntStream.rangeClosed(1,10).boxed().forEach(accountInterestRateSelector.getItems()::add);
     }
 
 
@@ -126,6 +122,7 @@ public class CustomerOverviewController {
 
 
     private void populateAccountsOverview() {
+        accountsOverview.getItems().clear();
         AccountRepository.getAccounts(customer);
         System.out.println(customer.getAccounts().size());
         customer.getAccounts().forEach(account -> System.out.println(account.getAccountNumber() + ", " + account.getAccountType()));
@@ -141,6 +138,7 @@ public class CustomerOverviewController {
     }
 
     private void populateLoansOverview() {
+        loansOverview.getItems().clear();
         LoanRepository.getLoans(customer);
         DecimalFormat formatDoubles = new DecimalFormat("#.#");
         NumberFormat currency = NumberFormat.getCurrencyInstance();
@@ -150,10 +148,13 @@ public class CustomerOverviewController {
         loanInterestCol.setCellValueFactory(loan -> new SimpleStringProperty(loan.getValue().getInterestRate() + "%"));
         loanMortgageCol.setCellValueFactory(loan -> new SimpleStringProperty(currency.format(loan.getValue().getMortagePlan()) + "/Mån"));
         loanPaymentPlanCol.setCellValueFactory(loan -> new SimpleStringProperty(formatDoubles.format(loan.getValue().getMonthlyPayment()) + " År"));
+
+
         loansOverview.setItems(FXCollections.observableList(customer.getLoans()));
     }
 
     private void populateTransactionHistory() {
+        transactionHistory.getItems().clear();
         NumberFormat currency = NumberFormat.getCurrencyInstance();
         Account currentAccount = customer.getAccounts().get(0);
         TransactionRepository.getTransactions(currentAccount, fromDateSelector.getValue(), toDateSelector.getValue());
@@ -213,14 +214,78 @@ public class CustomerOverviewController {
 
     @FXML
     private void depositMoney(ActionEvent actionEvent) {
+        if (accountAmountField.getText().isEmpty()) {
+            CustomerMain.showErrorMessage("Insättningsbelopp måste anges", "Felaktig inmatning");
+        } else if (accountsOverview.getSelectionModel().isEmpty()){
+            CustomerMain.showErrorMessage("Du måste välja uttagskonto", "Konto ej valt");
+        } else {
+            int depositAmount;
+            try {
+                depositAmount = Integer.parseInt(accountAmountField.getText());
+            } catch (NumberFormatException e) {
+                CustomerMain.showErrorMessage("Endast siffror i insättningsbeloppet", "Felaktig inmatning");
+                return;
+            }
+
+            Account account = accountsOverview.getSelectionModel().getSelectedItem();
+
+            boolean isSuccessfulDeposit = AccountRepository.deposit(account.getAccountId(), depositAmount);
+
+            if(isSuccessfulDeposit){
+                CustomerMain.showInformationMessage(depositAmount + " insatt på kontot", "Insättning genomförd");
+                populateAccountsOverview();
+            }
+        }
     }
 
     @FXML
     private void withdrawMoney(ActionEvent actionEvent) {
+        if (accountAmountField.getText().isEmpty()) {
+            CustomerMain.showErrorMessage("Uttagsbelopp måste anges", "Felaktig inmatning");
+        } else if (accountsOverview.getSelectionModel().isEmpty()){
+            CustomerMain.showErrorMessage("Du måste välja uttagskonto", "Konto ej valt");
+        } else {
+            int withdrawalAmount;
+            try {
+                withdrawalAmount = Integer.parseInt(accountAmountField.getText());
+            } catch (NumberFormatException e) {
+                CustomerMain.showErrorMessage("Endast siffror i uttagsbeloppet", "Felaktig inmatning");
+                return;
+            }
+
+            Account account = accountsOverview.getSelectionModel().getSelectedItem();
+            boolean isSuccessfulWithdrawal = AccountRepository.withdraw(account.getAccountId(), withdrawalAmount);
+
+            if(isSuccessfulWithdrawal){
+                CustomerMain.showInformationMessage(withdrawalAmount + " uttaget från kontot", "Uttag genomfört");
+                populateAccountsOverview();
+            }
+        }
     }
 
     @FXML
     private void changeAccountInterest(ActionEvent actionEvent) {
+        if (accountsOverview.getSelectionModel().isEmpty()) {
+            AdminMain.showErrorMessage("Du måste välja ett konto", "Kunde inte ändra räntan");
+        }
+        else {
+            try {
+                double newInterestRate = Double.parseDouble(accountInterestField.getText());
+                Account account = accountsOverview.getSelectionModel().getSelectedItem();
+
+                boolean isChangedInterestRate = AccountRepository.changeAccountInterest(account.getAccountId(), newInterestRate);
+
+                if(isChangedInterestRate){
+                    AdminMain.showInformationMessage("Räntan ändrad", "Allt gick bra");
+                    populateAccountsOverview();
+                }
+                else {
+                    AdminMain.showErrorMessage("Något gick fel", "Kunde inte ändra räntan");
+                }
+            } catch (NumberFormatException e) {
+                AdminMain.showErrorMessage("Ränta måste anges som decimaltal", "Kunde inte ändra räntan");
+            }
+        }
 
     }
 
@@ -253,7 +318,15 @@ public class CustomerOverviewController {
                 double newInterestRate = Double.parseDouble(loanInterestField.getText());
                 Loan loan = loansOverview.getSelectionModel().getSelectedItem();
 
-                if(LoanRepository.)
+                boolean isChangedInterestRate = LoanRepository.changeInterestRate(loan.getLoanId(), newInterestRate);
+
+                if(isChangedInterestRate){
+                    AdminMain.showInformationMessage("Räntan ändrad", "Allt gick bra");
+                    populateLoansOverview();
+                }
+                else {
+                    AdminMain.showErrorMessage("Något gick fel", "Kunde inte ändra räntan");
+                }
             } catch (NumberFormatException e) {
                 AdminMain.showErrorMessage("Ränta måste anges som decimaltal", "Kunde inte ändra räntan");
             }
