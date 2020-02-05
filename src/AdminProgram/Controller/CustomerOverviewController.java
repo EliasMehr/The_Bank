@@ -205,5 +205,6 @@ public class CustomerOverviewController {
 
     @FXML
     private void addCustomer(MouseEvent mouseEvent) {
+
     }
 }
