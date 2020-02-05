@@ -30,7 +30,7 @@
    </TableView>
    <Button layoutX="493.0" layoutY="256.0" mnemonicParsing="false" onAction="#depositMoney" text="Insättning" />
    <Button layoutX="567.0" layoutY="256.0" mnemonicParsing="false" onAction="#withdrawMoney" prefHeight="26.0" prefWidth="70.0" text="Uttag" />
-   <Button layoutX="898.0" layoutY="256.0" mnemonicParsing="false" onAction="#removeCustomer" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: #FF0000;" text="Avsluta" textFill="WHITE" />
+   <Button layoutX="898.0" layoutY="256.0" mnemonicParsing="false" onAction="#deleteAccount" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: #FF0000;" text="Avsluta" textFill="WHITE" />
    <Button layoutX="813.0" layoutY="256.0" mnemonicParsing="false" onAction="#changeAccountInterest" prefHeight="26.0" prefWidth="80.0" text="Ändra ränta" />
    <TextField fx:id="personalNumberField" layoutX="126.0" layoutY="141.0" prefHeight="26.0" prefWidth="120.0" />
    <TextField fx:id="firstNameField" layoutX="126.0" layoutY="177.0" prefHeight="26.0" prefWidth="120.0" />
