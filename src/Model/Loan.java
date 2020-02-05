@@ -3,6 +3,7 @@ package Model;
 public class Loan {
     private int loanId;
     private double amount;
+    private double remainingAmount;
     private double interestRate;
     private double monthlyPayment;
     private String name;
@@ -22,6 +23,14 @@ public class Loan {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public double getRemainingAmount() {
+        return remainingAmount;
+    }
+
+    public void setRemainingAmount(double remainingAmount) {
+        this.remainingAmount = remainingAmount;
     }
 
     public double getInterestRate() {

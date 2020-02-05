@@ -15,20 +15,17 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
-import javafx.util.Callback;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.chrono.ChronoLocalDateTime;
+import java.util.stream.Collectors;
 
 public class AccountsOverviewController {
 
@@ -46,6 +43,8 @@ public class AccountsOverviewController {
     @FXML
     private TableColumn<Loan, String> loanAmountCol;
     @FXML
+    private TableColumn<Loan, String> loanRemainingCol;
+    @FXML
     private TableColumn<Loan, String> loanMortgageCol;
     @FXML
     private TableColumn<Loan, String> loanInterestCol;
@@ -62,9 +61,9 @@ public class AccountsOverviewController {
     @FXML
     private TableColumn<Transaction, Integer> transactionAccountCol;
     @FXML
-    private DatePicker fromDate;
+    private DatePicker fromDateSelector;
     @FXML
-    private DatePicker toDate;
+    private DatePicker toDateSelector;
     @FXML
     private TextField withdrawalAmountField;
     @FXML
@@ -78,7 +77,8 @@ public class AccountsOverviewController {
     public void initialize() {
         customer = CustomerRepository.getCustomerById(CustomerMain.customerIdentity);
         customerNameLabel.setText("Välkommen till The Bank, " + customer.getFirstName() + " " + customer.getLastName());
-
+        fromDateSelector.setValue(LocalDate.now().minusMonths(1));
+        toDateSelector.setValue(LocalDate.now());
         populateAccountsOverview();
         populateLoansOverview();
         populateWithdrawalAccountSelector();
@@ -88,18 +88,21 @@ public class AccountsOverviewController {
 
     private void populateTransactionHistory() {
         NumberFormat currency = NumberFormat.getCurrencyInstance();
-        TransactionRepository.recentMonthTransactions(customer.getAccounts().get(0));
+        Account currentAccount = customer.getAccounts().get(0);
+        TransactionRepository.getTransactions(currentAccount, fromDateSelector.getValue(), toDateSelector.getValue());
+
 
         transactionAmountCol.setCellValueFactory(transaction -> new SimpleStringProperty(currency.format(transaction.getValue().getAmount())));
-        transactionDateCol.setCellValueFactory(transaction -> new SimpleObjectProperty(transaction.getValue().getDate().toLocalDate()));
-        transactionAccountCol.setCellValueFactory(transaction -> new SimpleIntegerProperty(customer.getAccounts().get(0).getAccountNumber()).asObject());
+        transactionDateCol.setCellValueFactory(transaction -> new SimpleObjectProperty(transaction.getValue().getDate()));
+        transactionAccountCol.setCellValueFactory(transaction -> new SimpleIntegerProperty(currentAccount.getAccountNumber()).asObject());
         transactionTypeCol.setCellValueFactory(transaction -> {
             var amount = new SimpleDoubleProperty(transaction.getValue().getAmount());
 
             return Bindings.when(amount.greaterThan(0))
                     .then("INSÄTTNING").otherwise("UTTAG");
         });
-        transactionHistory.setItems(FXCollections.observableList(customer.getAccounts().get(0).getTransactions()));
+
+        transactionHistory.setItems(FXCollections.observableList(currentAccount.getTransactions()));
     }
 
     private void populateWithdrawalAccountSelector() {
@@ -112,6 +115,7 @@ public class AccountsOverviewController {
         NumberFormat currency = NumberFormat.getCurrencyInstance();
 
         loanAmountCol.setCellValueFactory(loan -> new SimpleStringProperty(currency.format(loan.getValue().getAmount())));
+        loanRemainingCol.setCellValueFactory(loan -> new SimpleStringProperty(currency.format(loan.getValue().getRemainingAmount())));
         loanInterestCol.setCellValueFactory(loan -> new SimpleStringProperty(loan.getValue().getInterestRate() + "%"));
         loanMortgageCol.setCellValueFactory(loan -> new SimpleStringProperty(currency.format(loan.getValue().getMortagePlan()) + "/Mån"));
         loanPaymentPlanCol.setCellValueFactory(loan -> new SimpleStringProperty(formatDoubles.format(loan.getValue().getMonthlyPayment()) + " År"));
@@ -120,6 +124,8 @@ public class AccountsOverviewController {
 
     private void populateAccountsOverview() {
         AccountRepository.getAccounts(customer);
+        System.out.println(customer.getAccounts().size());
+        customer.getAccounts().forEach(account -> System.out.println(account.getAccountNumber() + ", " + account.getAccountType()));
         NumberFormat currency = NumberFormat.getCurrencyInstance();
 
         accountNumCol.setCellValueFactory(account -> new SimpleIntegerProperty(account.getValue().getAccountNumber()).asObject());
@@ -134,16 +140,27 @@ public class AccountsOverviewController {
 
     @FXML
     private void withdrawMoney(ActionEvent actionEvent) {
-        int withdrawalAmmount = Integer.parseInt(withdrawalAmountField.getText());
-
         if (withdrawalAmountField.getText().isEmpty()) {
-            CustomerMain.showErrorMessage("Ogiltig inmatning", "Felaktig inmatning");
-        } else if (withdrawalAmmount <= 0) {
-            CustomerMain.showErrorMessage("Ogiltig inmatning", "Du kan inte mata in ett negativt tal");
+            CustomerMain.showErrorMessage("Uttagsbelopp måste anges", "Felaktig inmatning");
+        } else if (withdrawalAccountSelector.getSelectionModel().isEmpty()){
+            CustomerMain.showErrorMessage("Du måste välja uttagskonto", "Konto ej valt");
         } else {
-            AccountRepository.withdraw(withdrawalAccountSelector.getSelectionModel().getSelectedItem().getAccountId(), withdrawalAmmount);
-            populateAccountsOverview();
-            populateWithdrawalAccountSelector();
+            int withdrawalAmmount;
+            try {
+                withdrawalAmmount = Integer.parseInt(withdrawalAmountField.getText());
+            } catch (NumberFormatException e) {
+                CustomerMain.showErrorMessage("Endast siffror i uttagsbeloppet", "Felaktig inmatning");
+                return;
+            }
+
+            boolean isSuccessfulWithdrawal = AccountRepository.withdraw(withdrawalAccountSelector.getSelectionModel().getSelectedItem().getAccountId(), withdrawalAmmount);
+
+            if(isSuccessfulWithdrawal){
+                CustomerMain.showInformationMessage(withdrawalAmmount + " uttaget från kontot", "Uttag genomfört");
+                withdrawalAccountSelector.setPromptText("Välj Konto");
+                populateAccountsOverview();
+                populateWithdrawalAccountSelector();
+            }
         }
     }
 

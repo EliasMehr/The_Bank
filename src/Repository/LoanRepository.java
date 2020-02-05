@@ -62,8 +62,9 @@ public class LoanRepository {
                 Loan loan = new Loan();
                 loan.setLoanId(resultSet.getInt(1));
                 loan.setAmount(resultSet.getDouble(2));
-                loan.setInterestRate(resultSet.getDouble(3));
-                loan.setMonthlyPayment(resultSet.getDouble(4));
+                loan.setRemainingAmount(resultSet.getDouble(3));
+                loan.setInterestRate(resultSet.getDouble(4));
+                loan.setMonthlyPayment(resultSet.getDouble(5));
 
                 customer.getLoans().add(loan);
             }

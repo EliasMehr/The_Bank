@@ -30,8 +30,9 @@ CREATE TABLE `the_bank`.`loan` (
   `loan_id` INT NOT NULL AUTO_INCREMENT,
   -- `name` VARCHAR(45) NOT NULL,
   `amount` DECIMAL(15,2) NOT NULL,
+  `remaining_amount` DECIMAL(15,2) NOT NULL,
   `interest_rate` DECIMAL(4,2) NOT NULL,
-  `monthly_payment` DECIMAL(15,2) NOT NULL,
+  `payment_plan` DECIMAL(15,2) NOT NULL,
   `customer_id` INT NULL,
   PRIMARY KEY (`loan_id`),
     FOREIGN KEY (`customer_id`)
@@ -42,7 +43,7 @@ CREATE TABLE `the_bank`.`loan` (
 CREATE TABLE `the_bank`.`transaction` (
   `transaction_id` INT NOT NULL AUTO_INCREMENT,
   `amount` DECIMAL(15,2) NOT NULL,
-  `date` DATETIME NOT NULL,
+  `date` DATE NOT NULL,
   `account_id` INT NULL,
   PRIMARY KEY (`transaction_id`),
     FOREIGN KEY (`account_id`)
@@ -62,35 +63,35 @@ VALUES (34563457, 30457,1.5,1,1),
        (12345574, 80000,1.93,4,4),
        (0987654, 30000,2.15,1,2);
 
-INSERT INTO loan ( amount, interest_rate, monthly_payment, customer_id)
+INSERT INTO loan ( amount, remaining_amount, interest_rate, payment_plan, customer_id)
 
-VALUES (300000, 3, 10000, 1),
-       (150000, 2.8, 10000, 2),
-       (2000000, 1.5, 10000, 3),
-       (568000, 4, 10000, 4);
+VALUES (300000, 185000, 3, 10, 1),
+       (150000, 96000, 2.8, 8, 2),
+       (2000000, 1999999, 1.5, 20, 3),
+       (568000, 357000, 4, 12, 4);
 
 INSERT INTO transaction (amount, date, account_id)
 
-VALUES (37, now() - interval 29 day, 1),
-(37, now() - interval 130 day, 1),
-(37, now() - interval 100 day, 1),
-(37, now() - interval 1 year, 1),
-       (299, now(), 2),
-       (457, now(), 3),
-       (2500, now(), 4),
-       (9000, now(), 1),
-       (53, now(), 2),
-       (349, now(), 3),
-       (599, now(), 4),
-       (449, now() - interval 15 day, 1),
-       (649, now(), 2),
-       (999, now(), 3),
-       (25, now(), 4),
-       (68, now(), 1),
-       (700, now(), 2),
-       (95, now(), 3),
-       (39, now(), 4),
-       (3200, now(), 1),
-       (88, now(), 2),
-       (399, now(), 3),
-       (8000, now(), 4);
+VALUES (37, current_date() - interval 29 day, 1),
+(37, current_date() - interval 130 day, 1),
+(37, current_date() - interval 100 day, 1),
+(37, current_date() - interval 1 year, 1),
+       (-299, current_date(), 2),
+       (457, current_date(), 3),
+       (2500, current_date(), 4),
+       (9000, current_date(), 1),
+       (-53, current_date(), 2),
+       (349, current_date(), 3),
+       (599, '2019-12-30', 4),
+       (449, current_date() - interval 15 day, 1),
+       (649, current_date(), 2),
+       (999, current_date(), 3),
+       (-25, current_date(), 4),
+       (-68, current_date(), 1),
+       (-700, current_date(), 2),
+       (-95, current_date(), 3),
+       (-39, current_date(), 4),
+       (3200, current_date(), 1),
+       (88, current_date(), 2),
+       (399, current_date(), 3),
+       (8000, current_date(), 4);
