@@ -293,25 +293,24 @@ public class CustomerOverviewController {
     private void deleteAccount(ActionEvent actionEvent) {
         if (accountsOverview.getSelectionModel().isEmpty()) {
             AdminMain.showErrorMessage("Du måste välja ett konto", "Kan inte ta bort ett konto som inte är valt");
-        }
-        else {
+        } else {
             Account account = accountsOverview.getSelectionModel().getSelectedItem();
             if (AdminMain.customerIdentity != 0) {
                 Alert deleteAccountAlert = new Alert(Alert.AlertType.CONFIRMATION, "Ta bort konto " + account.getAccountNumber() + "?", ButtonType.OK, ButtonType.CANCEL);
                 deleteAccountAlert.showAndWait();
-                if(deleteAccountAlert.getResult() == ButtonType.OK){
+                if (deleteAccountAlert.getResult() == ButtonType.OK) {
                     boolean isDeletedAccount = AccountRepository.deleteAccount(account.getAccountId());
 
-                    if(isDeletedAccount){
+                    if (isDeletedAccount) {
                         AdminMain.showInformationMessage("Konto avslutat", "Bye bye konto");
                         populateAccountsOverview();
                         transactionHistory.getItems().clear();
-                    }
-                    else {
+                    } else {
                         AdminMain.showErrorMessage("Något gick fel", "Kunde inte ta bort kontot");
                     }
                 }
 
+            }
         }
     }
 
