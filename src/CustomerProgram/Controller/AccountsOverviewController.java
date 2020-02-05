@@ -83,7 +83,8 @@ public class AccountsOverviewController {
         populateAccountsOverview();
         populateLoansOverview();
         populateWithdrawalAccountSelector();
-        populateTransactionHistory(customer.getAccounts().get(0));
+        if(!customer.getAccounts().isEmpty())
+             populateTransactionHistory(customer.getAccounts().get(0));
 
     }
 

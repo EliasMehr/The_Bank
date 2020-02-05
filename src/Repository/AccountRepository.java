@@ -65,7 +65,7 @@ public class AccountRepository {
         }
     }
 
-    public boolean createAccount(int customerId, double amount, int accountNumber) {
+    public static boolean createAccount(int customerId, double amount, int accountNumber) {
         PreparedStatement preparedStatement = null;
 
         try (Connection connection = DriverManager.getConnection(url, "root", "root")) {
@@ -84,11 +84,13 @@ public class AccountRepository {
         return true;
     }
 
-    public boolean deleteAccount(int accountId){
+    public static boolean deleteAccount(int accountId){
 
         try (Connection connection = DriverManager.getConnection(url, "root", "root")) {
             PreparedStatement preparedStatement = connection.prepareStatement("Delete from account where account_id = ?");
             preparedStatement.setInt(1, accountId);
+
+            System.out.println("Account id = " + accountId);
 
             int rowsUpdated = preparedStatement.executeUpdate();
 

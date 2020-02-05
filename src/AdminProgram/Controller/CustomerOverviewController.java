@@ -110,7 +110,7 @@ public class CustomerOverviewController {
     private void populateAccountsOverview() {
         AccountRepository.getAccounts(customer);
         System.out.println(customer.getAccounts().size());
-        customer.getAccounts().forEach(account -> System.out.println(account.getAccountNumber() + ", " + account.getAccountType()));
+        customer.getAccounts().forEach(account -> System.out.println(account.getAccountId() + ", " + account.getAccountNumber() + ", " + account.getAccountType()));
         NumberFormat currency = NumberFormat.getCurrencyInstance();
 
         accountNumCol.setCellValueFactory(account -> new SimpleIntegerProperty(account.getValue().getAccountNumber()).asObject());
@@ -209,7 +209,18 @@ public class CustomerOverviewController {
 
     @FXML
     private void deleteAccount(ActionEvent actionEvent) {
-
+        if(!accountsOverview.getSelectionModel().isEmpty()){
+            Account accountToDelete = accountsOverview.getSelectionModel().getSelectedItem();
+            boolean isDeletedAccount = AccountRepository.deleteAccount(accountToDelete.getAccountId());
+            if(isDeletedAccount){
+                AdminMain.showInformationMessage("Konto borttaget", "Bye bye konto");
+                populateAccountsOverview();
+                transactionHistory.getItems().clear();
+            }
+            else {
+                AdminMain.showErrorMessage("Det gick ej att ta bort kontot", "Fel inträffade");
+            }
+        }
     }
 
     @FXML
