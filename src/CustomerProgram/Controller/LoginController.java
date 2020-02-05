@@ -27,7 +27,6 @@ public class LoginController {
                 if (CustomerMain.customerIdentity == 0) {
                     CustomerMain.showErrorMessage("Felaktig PIN eller personnummer", "Felaktig inloggning");
                 } else {
-                    CustomerMain.showInformationMessage("Skickar vidare till portalen", "Inloggning accepterad");
                     CustomerViews.changeScene(CustomerViews.View.ACCOUNT_OVERVIEW);
                 }
             }

@@ -75,6 +75,7 @@ public class AccountRepository {
             if (hadResult) {
                 ResultSet resultSet = callableStatement.getResultSet();
                 if (resultSet.next()) {
+                    //Meddelande visas i javaFX-dialogruta
                     CustomerMain.showErrorMessage(resultSet.getString("embarrassing"), "Uttag ej möjligt");
                     return false;
                 }

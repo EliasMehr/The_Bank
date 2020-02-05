@@ -43,7 +43,7 @@ FROM customer
 WHERE personal_number = input_personal_number;
 
 IF NOT customer_exists(cust_id) THEN
-    SELECT 'Felaktigt personnummer eller PIN' AS ERROR;
+    SELECT 'Felaktigt personnummer' AS ERROR;
 ELSE
     SELECT cust_id AS customer_id;
 END IF;

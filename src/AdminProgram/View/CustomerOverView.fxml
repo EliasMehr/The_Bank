@@ -128,4 +128,5 @@
    <TextField fx:id="loanInterestField" layoutX="186.0" layoutY="505.0" prefHeight="26.0" prefWidth="40.0" promptText="ränta" />
    <TextField fx:id="loanPaymentPlanField" layoutX="312.0" layoutY="506.0" prefHeight="26.0" prefWidth="64.0" promptText="betalplan" />
    <Button layoutX="384.0" layoutY="507.0" mnemonicParsing="false" onAction="#changeLoanPaymentPlan" prefHeight="26.0" prefWidth="102.0" text="Ändra betalplan" />
+   <Button layoutX="839.0" layoutY="507.0" mnemonicParsing="false" onAction="#updateTransactionHistory" prefHeight="26.0" prefWidth="129.0" text="Uppdatera Historik" />
 </AnchorPane>
