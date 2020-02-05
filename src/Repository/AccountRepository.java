@@ -1,5 +1,6 @@
 package Repository;
 
+import CustomerProgram.CustomerMain;
 import Model.Account;
 import Model.Customer;
 
@@ -51,11 +52,11 @@ public class AccountRepository {
             if (hadResult) {
                 ResultSet resultSet = callableStatement.getResultSet();
                 if (resultSet.next()) {
-                    System.out.println(resultSet.getString("embarrassing"));
+                    CustomerMain.showErrorMessage(resultSet.getString("embarrassing"), "Uttag ej möjligt");
                     return false;
                 }
             }
-            System.out.println("Withdraw success");
+
             return true;
 
         } catch (SQLException e) {

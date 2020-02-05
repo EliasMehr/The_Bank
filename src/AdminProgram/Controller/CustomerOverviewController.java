@@ -6,14 +6,24 @@ import Model.Account;
 import Model.Customer;
 import Model.Loan;
 import Model.Transaction;
+import Repository.AccountRepository;
 import Repository.CustomerRepository;
+import Repository.LoanRepository;
+import Repository.TransactionRepository;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class CustomerOverviewController {
     @FXML
@@ -29,7 +39,9 @@ public class CustomerOverviewController {
     @FXML
     private TableView<Account> accountsOverview;
     @FXML
-    private TableColumn<Account, Integer> accountNumberCol;
+    private TableColumn<Account, Integer> accountNumCol;
+    @FXML
+    private TableColumn<Account, String> accountTypeCol;
     @FXML
     private TableColumn<Account, String> accountAmountCol;
     @FXML
@@ -55,7 +67,7 @@ public class CustomerOverviewController {
     @FXML
     private TableColumn<Transaction, String> transactionAmountCol;
     @FXML
-    private TableColumn<Transaction, String> transactionAccountCol;
+    private TableColumn<Transaction, Integer> transactionAccountCol;
     @FXML
     private DatePicker fromDateSelector;
     @FXML
@@ -73,14 +85,15 @@ public class CustomerOverviewController {
         if(currentCustomer == null)
             AdminMain.showErrorMessage("Personnumret finns inte i databasen", "Kunde inte hämta personuppgifter");
         else{
-            refreshCustomerInformation();
+            refreshCustomerInformationFields();
 
-            populateAccountsOverview(currentCustomer);
-            populateAccountsOverview(currentCustomer);
+            populateAccountsOverview();
+            populateLoansOverview();
+            populateTransactionHistory();
         }
     }
 
-    private void refreshCustomerInformation() {
+    private void refreshCustomerInformationFields() {
         AdminMain.customerIdentity = currentCustomer.getCustomerId();
         firstNameField.setText(currentCustomer.getFirstName());
         lastNameField.setText(currentCustomer.getLastName());
@@ -88,7 +101,50 @@ public class CustomerOverviewController {
         personalNumberField.setText(currentCustomer.getPersonalNumber());
     }
 
-    private void populateAccountsOverview(Customer customer) {
+
+    private void populateAccountsOverview() {
+        AccountRepository.getAccounts(currentCustomer);
+        System.out.println(currentCustomer.getAccounts().size());
+        currentCustomer.getAccounts().forEach(account -> System.out.println(account.getAccountNumber() + ", " + account.getAccountType()));
+        NumberFormat currency = NumberFormat.getCurrencyInstance();
+
+        accountNumCol.setCellValueFactory(account -> new SimpleIntegerProperty(account.getValue().getAccountNumber()).asObject());
+        accountAmountCol.setCellValueFactory(account -> new SimpleStringProperty(currency.format(account.getValue().getAmount())));
+        accountInterestCol.setCellValueFactory(account -> new SimpleStringProperty(account.getValue().getInterestRate() + "%"));
+        accountTypeCol.setCellValueFactory(account -> new SimpleStringProperty(account.getValue().getAccountType()));
+
+
+        accountsOverview.setItems(FXCollections.observableList(currentCustomer.getAccounts()));
+    }
+
+    private void populateLoansOverview() {
+        LoanRepository.getLoans(currentCustomer);
+        DecimalFormat formatDoubles = new DecimalFormat("#.#");
+        NumberFormat currency = NumberFormat.getCurrencyInstance();
+
+        loanAmountCol.setCellValueFactory(loan -> new SimpleStringProperty(currency.format(loan.getValue().getAmount())));
+        loanRemainingCol.setCellValueFactory(loan -> new SimpleStringProperty(currency.format(loan.getValue().getRemainingAmount())));
+        loanInterestCol.setCellValueFactory(loan -> new SimpleStringProperty(loan.getValue().getInterestRate() + "%"));
+        loanMortgageCol.setCellValueFactory(loan -> new SimpleStringProperty(currency.format(loan.getValue().getMortagePlan()) + "/Mån"));
+        loanPaymentPlanCol.setCellValueFactory(loan -> new SimpleStringProperty(formatDoubles.format(loan.getValue().getMonthlyPayment()) + " År"));
+        loansOverview.setItems(FXCollections.observableList(currentCustomer.getLoans()));
+    }
+
+    private void populateTransactionHistory() {
+        NumberFormat currency = NumberFormat.getCurrencyInstance();
+        TransactionRepository.recentMonthTransactions(currentCustomer.getAccounts().get(0));
+
+        transactionAmountCol.setCellValueFactory(transaction -> new SimpleStringProperty(currency.format(transaction.getValue().getAmount())));
+        transactionDateCol.setCellValueFactory(transaction -> new SimpleObjectProperty(transaction.getValue().getDate().toLocalDate()));
+        transactionAccountCol.setCellValueFactory(transaction -> new SimpleIntegerProperty(currentCustomer.getAccounts().get(0).getAccountNumber()).asObject());
+        transactionTypeCol.setCellValueFactory(transaction -> {
+            var amount = new SimpleDoubleProperty(transaction.getValue().getAmount());
+
+            return Bindings.when(amount.greaterThan(0))
+                    .then("INSÄTTNING").otherwise("UTTAG");
+        });
+
+        transactionHistory.setItems(FXCollections.observableList(currentCustomer.getAccounts().get(0).getTransactions()));
     }
 
     @FXML
@@ -101,7 +157,7 @@ public class CustomerOverviewController {
             currentCustomer.setPersonalNumber(personalNumberField.getText());
             currentCustomer.setPin(newPin);
             CustomerRepository.changePersonalInfo(currentCustomer, currentCustomer.getFirstName(), currentCustomer.getLastName(), currentCustomer.getPersonalNumber(), currentCustomer.getPin());
-            refreshCustomerInformation();
+            refreshCustomerInformationFields();
             CustomerMain.showInformationMessage("Personliga uppgifter uppdaterat för " + currentCustomer.getFirstName() + " " + currentCustomer.getLastName(), "Tadaa!!");
         } catch (NumberFormatException e) {
             AdminMain.showErrorMessage("PIN får endast innehålla siffror!", "Ogiltig PIN-kod");

@@ -22,9 +22,10 @@
    </ImageView>
    <TableView fx:id="accountsOverview" layoutX="498.0" layoutY="138.0" prefHeight="109.0" prefWidth="470.0">
       <columns>
-         <TableColumn fx:id="accountNumberCol" editable="false" prefWidth="171.20001220703125" text="Kontonummer" />
-         <TableColumn fx:id="accountAmountCol" editable="false" prefWidth="122.40008544921875" text="Disponibelt Belopp" />
-         <TableColumn fx:id="accountInterestCol" minWidth="1.59991455078125" prefWidth="104.7999267578125" text="Ränta" />
+         <TableColumn fx:id="accountNumCol" editable="false" prefWidth="138.39996337890625" text="Kontonummer" />
+         <TableColumn fx:id="accountTypeCol" prefWidth="107.199951171875" text="Typ" />
+         <TableColumn fx:id="accountAmountCol" editable="false" prefWidth="118.4000244140625" text="Disponibelt Belopp" />
+         <TableColumn fx:id="accountInterestCol" minWidth="1.59991455078125" prefWidth="81.5999755859375" text="Ränta" />
       </columns>
    </TableView>
    <Button layoutX="493.0" layoutY="256.0" mnemonicParsing="false" onAction="#depositMoney" text="Insättning" />
