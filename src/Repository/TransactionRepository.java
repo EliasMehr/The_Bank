@@ -14,7 +14,6 @@ public class TransactionRepository {
     public static boolean getTransactions(Account account, LocalDate fromDate, LocalDate toDate){
         PreparedStatement preparedStatement = null;
 
-        account.setAccountId(1);
 
         try(Connection connection = DriverManager.getConnection(url, "root", "root")) {
             preparedStatement = connection.prepareStatement("select * from transaction where date between ? AND ? AND account_id = ? order by date desc");
