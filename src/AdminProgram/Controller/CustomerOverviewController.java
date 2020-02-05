@@ -214,5 +214,6 @@ public class CustomerOverviewController {
 
     @FXML
     private void addCustomer(MouseEvent mouseEvent) {
+        AdminViews.changeScene(AdminViews.View.NEW_CUSTOMER);
     }
 }
