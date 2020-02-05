@@ -54,7 +54,7 @@ public class NewCustomerController {
         } else {
             CustomerRepository.addCustomer(firstname, lastname, personID, pinCode);
             Customer customer = CustomerRepository.getCustomerByPersonalNumber(customerPersonID.getText());
-            AccountRepository.createAccount(customer.getCustomerId(), 0, accountNumber, "Person-konto");
+            AccountRepository.createAccount(customer.getCustomerId(), 0, accountNumber, "Person-konto", 0);
 
             AdminMain.customerIdentity = customer.getCustomerId();
 

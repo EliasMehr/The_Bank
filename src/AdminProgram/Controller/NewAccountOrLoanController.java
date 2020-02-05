@@ -111,7 +111,7 @@ public class NewAccountOrLoanController {
             String accountType = account_Selector.getSelectionModel().getSelectedItem();
             int accountNumber = Integer.parseInt(generateAccountNumber());
 
-            boolean isSuccessful = AccountRepository.createAccount(customer.getCustomerId(), amount, accountNumber, accountType);
+            boolean isSuccessful = AccountRepository.createAccount(customer.getCustomerId(), amount, accountNumber, accountType, interestRate);
 
             if (isSuccessful) {
                 AdminMain.showInformationMessage("Nytt konto skapat", "Genomfört");
