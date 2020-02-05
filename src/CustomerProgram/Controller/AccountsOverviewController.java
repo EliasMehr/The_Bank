@@ -93,7 +93,12 @@ public class AccountsOverviewController {
         transactionAmountCol.setCellValueFactory(transaction -> new SimpleStringProperty(currency.format(transaction.getValue().getAmount())));
         transactionDateCol.setCellValueFactory(transaction -> new SimpleObjectProperty(transaction.getValue().getDate().toLocalDate()));
         transactionAccountCol.setCellValueFactory(transaction -> new SimpleIntegerProperty(customer.getAccounts().get(0).getAccountNumber()).asObject());
+        transactionTypeCol.setCellValueFactory(transaction -> {
+            var amount = new SimpleDoubleProperty(transaction.getValue().getAmount());
 
+            return Bindings.when(amount.greaterThan(0))
+                    .then("INSÄTTNING").otherwise("UTTAG");
+        });
         transactionHistory.setItems(FXCollections.observableList(customer.getAccounts().get(0).getTransactions()));
     }
 
