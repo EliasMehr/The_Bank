@@ -291,15 +291,27 @@ public class CustomerOverviewController {
 
     @FXML
     private void deleteAccount(ActionEvent actionEvent) {
-        if (AdminMain.customerIdentity != 0) {
-            Alert deleteCustomerAlert = new Alert(Alert.AlertType.CONFIRMATION, "Ta bort kund " + customer.getFirstName() + " "+ customer.getLastName() + "?", ButtonType.OK, ButtonType.CANCEL);
-            deleteCustomerAlert.showAndWait();
-            if(deleteCustomerAlert.getResult() == ButtonType.OK){
-                CustomerRepository.deleteCustomer(customer.getCustomerId());
-                AdminMain.showInformationMessage("Kund borttagen från registret", "Farväl kära kund");
-                AdminMain.customerIdentity = 0;
-                AdminViews.changeScene(AdminViews.View.CUSTOMER_OVERVIEW);
-            }
+        if (accountsOverview.getSelectionModel().isEmpty()) {
+            AdminMain.showErrorMessage("Du måste välja ett konto", "Kan inte ta bort ett konto som inte är valt");
+        }
+        else {
+            Account account = accountsOverview.getSelectionModel().getSelectedItem();
+            if (AdminMain.customerIdentity != 0) {
+                Alert deleteAccountAlert = new Alert(Alert.AlertType.CONFIRMATION, "Ta bort konto " + account.getAccountNumber() + "?", ButtonType.OK, ButtonType.CANCEL);
+                deleteAccountAlert.showAndWait();
+                if(deleteAccountAlert.getResult() == ButtonType.OK){
+                    boolean isDeletedAccount = AccountRepository.deleteAccount(account.getAccountId());
+
+                    if(isDeletedAccount){
+                        AdminMain.showInformationMessage("Konto avslutat", "Bye bye konto");
+                        populateAccountsOverview();
+                        transactionHistory.getItems().clear();
+                    }
+                    else {
+                        AdminMain.showErrorMessage("Något gick fel", "Kunde inte ta bort kontot");
+                    }
+                }
+
         }
     }
 
@@ -335,5 +347,26 @@ public class CustomerOverviewController {
 
     @FXML
     private void changeLoanPaymentPlan(ActionEvent actionEvent) {
+        if (loansOverview.getSelectionModel().isEmpty()) {
+            AdminMain.showErrorMessage("Du måste välja ett lån", "Kunde inte ändra betalplan");
+        }
+        else {
+            try {
+                double newPaymentPlan = Integer.parseInt(loanPaymentPlanField.getText());
+                Loan loan = loansOverview.getSelectionModel().getSelectedItem();
+
+                boolean isChangedPaymentPlan = LoanRepository.changePaymentPlan(loan.getLoanId(), newPaymentPlan);
+
+                if(isChangedPaymentPlan){
+                    AdminMain.showInformationMessage("Betalplan ändrad", "Allt gick bra");
+                    populateLoansOverview();
+                }
+                else {
+                    AdminMain.showErrorMessage("Något gick fel", "Kunde inte ändra betalplan");
+                }
+            } catch (NumberFormatException e) {
+                AdminMain.showErrorMessage("Betalplan måste anges som en siffra", "Kunde inte ändra betalplan");
+            }
+        }
     }
 }
