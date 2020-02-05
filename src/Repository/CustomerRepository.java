@@ -105,7 +105,7 @@ public class CustomerRepository {
         return true;
     }
 
-    public boolean addCustomer(String firstName, String lastName, String personalNumber, int pin) {
+    public static boolean addCustomer(String firstName, String lastName, String personalNumber, int pin) {
 
         PreparedStatement preparedStatement = null;
         try(Connection connection = DriverManager.getConnection(url, "root", "root")) {

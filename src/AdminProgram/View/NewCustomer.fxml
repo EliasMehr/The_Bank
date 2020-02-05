@@ -19,11 +19,12 @@
       <Label layoutX="48.0" layoutY="153.0" text="Kontonummer" />
       <TextField fx:id="customerAccountNumb" editable="false" layoutX="51.0" layoutY="170.0" />
       <PasswordField fx:id="customerPIN" editable="false" layoutX="212.0" layoutY="170.0" prefHeight="25.0" prefWidth="55.0" />
-      <Label layoutX="48.0" layoutY="14.0" text="Ny Kund">
+      <Label fx:id="customer_label" layoutX="48.0" layoutY="14.0" text="Ny Kund">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Button fx:id="processCustomer" layoutX="370.0" layoutY="170.0" mnemonicParsing="false" onAction="#createNewCustomer" prefHeight="25.0" prefWidth="149.0" text="Registrera ny kund" />
+      <Button fx:id="processCustomer" layoutX="390.0" layoutY="170.0" mnemonicParsing="false" onAction="#createNewCustomer" prefHeight="25.0" prefWidth="129.0" text="Registrera ny kund" />
+      <Button layoutX="273.0" layoutY="170.0" mnemonicParsing="false" onAction="#returnToPortal" prefHeight="25.0" prefWidth="109.0" text="Till huvudmenyn" />
    </children>
 </AnchorPane>

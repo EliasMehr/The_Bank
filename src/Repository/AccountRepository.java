@@ -65,14 +65,15 @@ public class AccountRepository {
         }
     }
 
-    public boolean createAccount(int customerId, double amount, int accountNumber) {
+    public static boolean createAccount(int customerId, double amount, int accountNumber, String accountType) {
         PreparedStatement preparedStatement = null;
 
         try (Connection connection = DriverManager.getConnection(url, "root", "root")) {
-            preparedStatement = connection.prepareCall("{ call create_account(?,?,?) }");
+            preparedStatement = connection.prepareCall("{ call create_account(?,?,?,?) }");
             preparedStatement.setInt(1, customerId);
-            preparedStatement.setDouble(2, amount);
-            preparedStatement.setInt(3, accountNumber);
+            preparedStatement.setString(2, accountType);
+            preparedStatement.setDouble(3, amount);
+            preparedStatement.setInt(4, accountNumber);
 
             preparedStatement.executeUpdate();
 

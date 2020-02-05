@@ -1,3 +1,4 @@
+DROP PROCEDURE IF EXISTS transactionEvent;
 Delimiter //
 create procedure transactionEvent( IN accountIDX INT, IN amountX INT)
     begin
@@ -53,8 +54,9 @@ CREATE TRIGGER after_transaction_INSERT
 
 // DELIMITER ;
 
+DROP PROCEDURE IF EXISTS create_account;
 Delimiter // 
-create procedure create_account(IN param_customer_id INT, IN param_account_type INT, IN param_amount DECIMAL, IN param_account_number INT)
+create procedure create_account(IN param_customer_id INT, IN param_account_type INT, IN param_amount DECIMAL, IN param_account_number INT, IN param_account_type)
 Begin
 DECLARE EXIT HANDLER FOR SQLException
 	Begin

@@ -1,6 +1,7 @@
 package AdminProgram.Controller;
 
 import AdminProgram.AdminMain;
+import AdminProgram.AdminViews;
 import CustomerProgram.CustomerMain;
 import Model.Account;
 import Model.Customer;
@@ -205,6 +206,6 @@ public class CustomerOverviewController {
 
     @FXML
     private void addCustomer(MouseEvent mouseEvent) {
-
+        AdminViews.changeScene(AdminViews.View.NEW_CUSTOMER);
     }
 }
