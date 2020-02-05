@@ -32,7 +32,7 @@ CREATE TABLE `the_bank`.`loan` (
   `amount` DECIMAL(15,2) NOT NULL,
   `remaining_amount` DECIMAL(15,2) NOT NULL,
   `interest_rate` DECIMAL(4,2) NOT NULL,
-  `monthly_payment` DECIMAL(15,2) NOT NULL,
+  `payment_plan` DECIMAL(15,2) NOT NULL,
   `customer_id` INT NULL,
   PRIMARY KEY (`loan_id`),
     FOREIGN KEY (`customer_id`)
@@ -63,12 +63,12 @@ VALUES (34563457, 30457,1.5,1,1),
        (12345574, 80000,1.93,4,4),
        (0987654, 30000,2.15,1,2);
 
-INSERT INTO loan ( amount, remaining_amount, interest_rate, monthly_payment, customer_id)
+INSERT INTO loan ( amount, remaining_amount, interest_rate, payment_plan, customer_id)
 
-VALUES (300000, 185000, 3, 10000, 1),
-       (150000, 96000, 2.8, 10000, 2),
-       (2000000, 1999999, 1.5, 10000, 3),
-       (568000, 357000, 4, 10000, 4);
+VALUES (300000, 185000, 3, 10, 1),
+       (150000, 96000, 2.8, 8, 2),
+       (2000000, 1999999, 1.5, 20, 3),
+       (568000, 357000, 4, 12, 4);
 
 INSERT INTO transaction (amount, date, account_id)
 
