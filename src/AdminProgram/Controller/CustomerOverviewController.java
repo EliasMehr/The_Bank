@@ -87,6 +87,13 @@ public class CustomerOverviewController {
 
     private Customer customer;
 
+    public void initialize(){
+        if(AdminMain.customerIdentity != 0){
+            customer = CustomerRepository.getCustomerById(AdminMain.customerIdentity);
+            loadCustomerData();
+        }
+    }
+
 
     @FXML
     private void createNewAccountOrLoan(ActionEvent actionEvent) {
@@ -100,16 +107,20 @@ public class CustomerOverviewController {
         if (customer == null)
             AdminMain.showErrorMessage("Personnumret finns inte i databasen", "Kunde inte hämta personuppgifter");
         else {
-            refreshCustomerInformationFields();
+            loadCustomerData();
+        }
+    }
 
-            fromDateSelector.setValue(LocalDate.now().minusMonths(1));
-            toDateSelector.setValue(LocalDate.now());
+    private void loadCustomerData() {
+        refreshCustomerInformationFields();
 
-            populateAccountsOverview();
-            populateLoansOverview();
-            if(customer.getAccounts().size() != 0){
-                populateTransactionHistory(customer.getAccounts().get(0));
-            }
+        fromDateSelector.setValue(LocalDate.now().minusMonths(1));
+        toDateSelector.setValue(LocalDate.now());
+
+        populateAccountsOverview();
+        populateLoansOverview();
+        if(customer.getAccounts().size() != 0){
+            populateTransactionHistory(customer.getAccounts().get(0));
         }
     }
 
@@ -125,8 +136,6 @@ public class CustomerOverviewController {
     private void populateAccountsOverview() {
         accountsOverview.getItems().clear();
         AccountRepository.getAccounts(customer);
-        System.out.println(customer.getAccounts().size());
-        customer.getAccounts().forEach(account -> System.out.println(account.getAccountNumber() + ", " + account.getAccountType()));
         NumberFormat currency = NumberFormat.getCurrencyInstance();
 
         accountNumCol.setCellValueFactory(account -> new SimpleIntegerProperty(account.getValue().getAccountNumber()).asObject());
