@@ -82,20 +82,24 @@ public class CustomerOverviewController {
 
     @FXML
     private void createNewAccountOrLoan(ActionEvent actionEvent) {
-        AdminViews.changeScene(AdminViews.View.NEW_ACCOUNT_OR_LOAN);
+        if (AdminMain.customerIdentity == 0) {
+            AdminMain.showErrorMessage("Ingen kund vald", "OGILTIG KUND");
+        } else {
+            AdminViews.changeScene(AdminViews.View.NEW_ACCOUNT_OR_LOAN);
+        }
     }
 
-    public void initialize(){
-        IntStream.rangeClosed(1,10).boxed().forEach(accountInterestRateSelector.getItems()::add);
+    public void initialize() {
+        IntStream.rangeClosed(1, 10).boxed().forEach(accountInterestRateSelector.getItems()::add);
     }
 
 
     @FXML
     private void findCustomer() {
-         customer = CustomerRepository.getCustomerByPersonalNumber(searchCustomerField.getText());
-        if(customer == null)
+        customer = CustomerRepository.getCustomerByPersonalNumber(searchCustomerField.getText());
+        if (customer == null)
             AdminMain.showErrorMessage("Personnumret finns inte i databasen", "Kunde inte hämta personuppgifter");
-        else{
+        else {
             refreshCustomerInformationFields();
 
             fromDateSelector.setValue(LocalDate.now().minusMonths(1));
@@ -173,11 +177,10 @@ public class CustomerOverviewController {
             customer.setPersonalNumber(personalNumberField.getText());
             customer.setPin(newPin);
             boolean isChangedCustomerInfo = CustomerRepository.changePersonalInfo(customer, customer.getFirstName(), customer.getLastName(), customer.getPersonalNumber(), customer.getPin());
-            if(isChangedCustomerInfo){
+            if (isChangedCustomerInfo) {
                 refreshCustomerInformationFields();
                 CustomerMain.showInformationMessage("Personliga uppgifter uppdaterat för " + customer.getFirstName() + " " + customer.getLastName(), "Tadaa!!");
-            }
-            else {
+            } else {
                 AdminMain.showErrorMessage("Kunde inte uppdatera kunduppgifter", "Något gick fel");
             }
         } catch (NumberFormatException e) {
@@ -188,9 +191,9 @@ public class CustomerOverviewController {
     @FXML
     private void deleteCustomer(ActionEvent actionEvent) {
         if (AdminMain.customerIdentity != 0) {
-            Alert deleteCustomerAlert = new Alert(Alert.AlertType.CONFIRMATION, "Ta bort kund " + customer.getFirstName() + " "+ customer.getLastName() + "?", ButtonType.OK, ButtonType.CANCEL);
+            Alert deleteCustomerAlert = new Alert(Alert.AlertType.CONFIRMATION, "Ta bort kund " + customer.getFirstName() + " " + customer.getLastName() + "?", ButtonType.OK, ButtonType.CANCEL);
             deleteCustomerAlert.showAndWait();
-            if(deleteCustomerAlert.getResult() == ButtonType.OK){
+            if (deleteCustomerAlert.getResult() == ButtonType.OK) {
                 CustomerRepository.deleteCustomer(customer.getCustomerId());
                 AdminMain.showInformationMessage("Kund borttagen från registret", "Farväl kära kund");
                 AdminMain.customerIdentity = 0;
@@ -220,9 +223,9 @@ public class CustomerOverviewController {
     @FXML
     private void deleteAccount(ActionEvent actionEvent) {
         if (AdminMain.customerIdentity != 0) {
-            Alert deleteCustomerAlert = new Alert(Alert.AlertType.CONFIRMATION, "Ta bort kund " + customer.getFirstName() + " "+ customer.getLastName() + "?", ButtonType.OK, ButtonType.CANCEL);
+            Alert deleteCustomerAlert = new Alert(Alert.AlertType.CONFIRMATION, "Ta bort kund " + customer.getFirstName() + " " + customer.getLastName() + "?", ButtonType.OK, ButtonType.CANCEL);
             deleteCustomerAlert.showAndWait();
-            if(deleteCustomerAlert.getResult() == ButtonType.OK){
+            if (deleteCustomerAlert.getResult() == ButtonType.OK) {
                 CustomerRepository.deleteCustomer(customer.getCustomerId());
                 AdminMain.showInformationMessage("Kund borttagen från registret", "Farväl kära kund");
                 AdminMain.customerIdentity = 0;

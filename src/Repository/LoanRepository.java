@@ -31,15 +31,16 @@ public class LoanRepository {
         }
     }
 
-    public boolean createLoan(double amount, double interestRate, double monthlyPayment, int customerId) {
+    public static boolean createLoan(double amount, double interestRate, double monthlyPayment, int customerId) {
         PreparedStatement preparedStatement = null;
 
         try (Connection connection = DriverManager.getConnection(url, "root", "root")) {
-            preparedStatement = connection.prepareStatement("{ call createLoan(?,?,?,?) }");
+            preparedStatement = connection.prepareStatement("{ call createLoan(?,?,?,?,?) }");
             preparedStatement.setDouble(1, amount);
-            preparedStatement.setDouble(2, interestRate);
-            preparedStatement.setDouble(3, monthlyPayment);
-            preparedStatement.setInt(4, customerId);
+            preparedStatement.setDouble(2, amount);
+            preparedStatement.setDouble(3, interestRate);
+            preparedStatement.setDouble(4, monthlyPayment);
+            preparedStatement.setInt(5, customerId);
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();

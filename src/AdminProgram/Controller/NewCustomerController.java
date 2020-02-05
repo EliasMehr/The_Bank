@@ -24,15 +24,12 @@ public class NewCustomerController {
 
 
     public void initialize() {
-
-
         customerPIN.setText(generateAccountPIN());
         customerAccountNumb.setText(generateAccountNumber());
-
     }
 
 
-    public String generateAccountNumber(){
+    public String generateAccountNumber() {
         Random genRand = new Random();
         int accountNumber = genRand.nextInt(100000000) + 99999999;
         return String.valueOf(accountNumber);
