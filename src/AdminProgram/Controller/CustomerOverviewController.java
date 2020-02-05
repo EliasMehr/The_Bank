@@ -88,7 +88,6 @@ public class CustomerOverviewController {
     private Customer customer;
 
 
-
     @FXML
     private void createNewAccountOrLoan(ActionEvent actionEvent) {
         AdminViews.changeScene(AdminViews.View.NEW_ACCOUNT_OR_LOAN);
@@ -97,10 +96,10 @@ public class CustomerOverviewController {
 
     @FXML
     private void findCustomer() {
-         customer = CustomerRepository.getCustomerByPersonalNumber(searchCustomerField.getText());
-        if(customer == null)
+        customer = CustomerRepository.getCustomerByPersonalNumber(searchCustomerField.getText());
+        if (customer == null)
             AdminMain.showErrorMessage("Personnumret finns inte i databasen", "Kunde inte hämta personuppgifter");
-        else{
+        else {
             refreshCustomerInformationFields();
 
             fromDateSelector.setValue(LocalDate.now().minusMonths(1));
@@ -108,7 +107,9 @@ public class CustomerOverviewController {
 
             populateAccountsOverview();
             populateLoansOverview();
-            populateTransactionHistory();
+            if(customer.getAccounts().size() != 0){
+                populateTransactionHistory(customer.getAccounts().get(0));
+            }
         }
     }
 
@@ -153,16 +154,16 @@ public class CustomerOverviewController {
         loansOverview.setItems(FXCollections.observableList(customer.getLoans()));
     }
 
-    private void populateTransactionHistory() {
+    private void populateTransactionHistory(Account account) {
         transactionHistory.getItems().clear();
         NumberFormat currency = NumberFormat.getCurrencyInstance();
-        Account currentAccount = customer.getAccounts().get(0);
-        TransactionRepository.getTransactions(currentAccount, fromDateSelector.getValue(), toDateSelector.getValue());
+
+        TransactionRepository.getTransactions(account, fromDateSelector.getValue(), toDateSelector.getValue());
 
 
         transactionAmountCol.setCellValueFactory(transaction -> new SimpleStringProperty(currency.format(transaction.getValue().getAmount())));
         transactionDateCol.setCellValueFactory(transaction -> new SimpleObjectProperty(transaction.getValue().getDate()));
-        transactionAccountCol.setCellValueFactory(transaction -> new SimpleIntegerProperty(currentAccount.getAccountNumber()).asObject());
+        transactionAccountCol.setCellValueFactory(transaction -> new SimpleIntegerProperty(account.getAccountNumber()).asObject());
         transactionTypeCol.setCellValueFactory(transaction -> {
             var amount = new SimpleDoubleProperty(transaction.getValue().getAmount());
 
@@ -170,7 +171,7 @@ public class CustomerOverviewController {
                     .then("INSÄTTNING").otherwise("UTTAG");
         });
 
-        transactionHistory.setItems(FXCollections.observableList(currentAccount.getTransactions()));
+        transactionHistory.setItems(FXCollections.observableList(account.getTransactions()));
     }
 
     @FXML
@@ -183,11 +184,10 @@ public class CustomerOverviewController {
             customer.setPersonalNumber(personalNumberField.getText());
             customer.setPin(newPin);
             boolean isChangedCustomerInfo = CustomerRepository.changePersonalInfo(customer, customer.getFirstName(), customer.getLastName(), customer.getPersonalNumber(), customer.getPin());
-            if(isChangedCustomerInfo){
+            if (isChangedCustomerInfo) {
                 refreshCustomerInformationFields();
                 CustomerMain.showInformationMessage("Personliga uppgifter uppdaterat för " + customer.getFirstName() + " " + customer.getLastName(), "Tadaa!!");
-            }
-            else {
+            } else {
                 AdminMain.showErrorMessage("Kunde inte uppdatera kunduppgifter", "Något gick fel");
             }
         } catch (NumberFormatException e) {
@@ -198,9 +198,9 @@ public class CustomerOverviewController {
     @FXML
     private void deleteCustomer(ActionEvent actionEvent) {
         if (AdminMain.customerIdentity != 0) {
-            Alert deleteCustomerAlert = new Alert(Alert.AlertType.CONFIRMATION, "Ta bort kund " + customer.getFirstName() + " "+ customer.getLastName() + "?", ButtonType.OK, ButtonType.CANCEL);
+            Alert deleteCustomerAlert = new Alert(Alert.AlertType.CONFIRMATION, "Ta bort kund " + customer.getFirstName() + " " + customer.getLastName() + "?", ButtonType.OK, ButtonType.CANCEL);
             deleteCustomerAlert.showAndWait();
-            if(deleteCustomerAlert.getResult() == ButtonType.OK){
+            if (deleteCustomerAlert.getResult() == ButtonType.OK) {
                 CustomerRepository.deleteCustomer(customer.getCustomerId());
                 AdminMain.showInformationMessage("Kund borttagen från registret", "Farväl kära kund");
                 AdminMain.customerIdentity = 0;
@@ -211,12 +211,11 @@ public class CustomerOverviewController {
     }
 
 
-
     @FXML
     private void depositMoney(ActionEvent actionEvent) {
         if (accountAmountField.getText().isEmpty()) {
             CustomerMain.showErrorMessage("Insättningsbelopp måste anges", "Felaktig inmatning");
-        } else if (accountsOverview.getSelectionModel().isEmpty()){
+        } else if (accountsOverview.getSelectionModel().isEmpty()) {
             CustomerMain.showErrorMessage("Du måste välja uttagskonto", "Konto ej valt");
         } else {
             int depositAmount;
@@ -231,7 +230,7 @@ public class CustomerOverviewController {
 
             boolean isSuccessfulDeposit = AccountRepository.deposit(account.getAccountId(), depositAmount);
 
-            if(isSuccessfulDeposit){
+            if (isSuccessfulDeposit) {
                 CustomerMain.showInformationMessage(depositAmount + " insatt på kontot", "Insättning genomförd");
                 populateAccountsOverview();
             }
@@ -242,7 +241,7 @@ public class CustomerOverviewController {
     private void withdrawMoney(ActionEvent actionEvent) {
         if (accountAmountField.getText().isEmpty()) {
             CustomerMain.showErrorMessage("Uttagsbelopp måste anges", "Felaktig inmatning");
-        } else if (accountsOverview.getSelectionModel().isEmpty()){
+        } else if (accountsOverview.getSelectionModel().isEmpty()) {
             CustomerMain.showErrorMessage("Du måste välja uttagskonto", "Konto ej valt");
         } else {
             int withdrawalAmount;
@@ -256,7 +255,7 @@ public class CustomerOverviewController {
             Account account = accountsOverview.getSelectionModel().getSelectedItem();
             boolean isSuccessfulWithdrawal = AccountRepository.withdraw(account.getAccountId(), withdrawalAmount);
 
-            if(isSuccessfulWithdrawal){
+            if (isSuccessfulWithdrawal) {
                 CustomerMain.showInformationMessage(withdrawalAmount + " uttaget från kontot", "Uttag genomfört");
                 populateAccountsOverview();
             }
@@ -267,19 +266,17 @@ public class CustomerOverviewController {
     private void changeAccountInterest(ActionEvent actionEvent) {
         if (accountsOverview.getSelectionModel().isEmpty()) {
             AdminMain.showErrorMessage("Du måste välja ett konto", "Kunde inte ändra räntan");
-        }
-        else {
+        } else {
             try {
                 double newInterestRate = Double.parseDouble(accountInterestField.getText());
                 Account account = accountsOverview.getSelectionModel().getSelectedItem();
 
                 boolean isChangedInterestRate = AccountRepository.changeAccountInterest(account.getAccountId(), newInterestRate);
 
-                if(isChangedInterestRate){
+                if (isChangedInterestRate) {
                     AdminMain.showInformationMessage("Räntan ändrad", "Allt gick bra");
                     populateAccountsOverview();
-                }
-                else {
+                } else {
                     AdminMain.showErrorMessage("Något gick fel", "Kunde inte ändra räntan");
                 }
             } catch (NumberFormatException e) {
@@ -323,19 +320,17 @@ public class CustomerOverviewController {
     private void changeLoanInterest(ActionEvent actionEvent) {
         if (loansOverview.getSelectionModel().isEmpty()) {
             AdminMain.showErrorMessage("Du måste välja ett lån", "Kunde inte ändra räntan");
-        }
-        else {
+        } else {
             try {
                 double newInterestRate = Double.parseDouble(loanInterestField.getText());
                 Loan loan = loansOverview.getSelectionModel().getSelectedItem();
 
                 boolean isChangedInterestRate = LoanRepository.changeInterestRate(loan.getLoanId(), newInterestRate);
 
-                if(isChangedInterestRate){
+                if (isChangedInterestRate) {
                     AdminMain.showInformationMessage("Räntan ändrad", "Allt gick bra");
                     populateLoansOverview();
-                }
-                else {
+                } else {
                     AdminMain.showErrorMessage("Något gick fel", "Kunde inte ändra räntan");
                 }
             } catch (NumberFormatException e) {
@@ -348,24 +343,27 @@ public class CustomerOverviewController {
     private void changeLoanPaymentPlan(ActionEvent actionEvent) {
         if (loansOverview.getSelectionModel().isEmpty()) {
             AdminMain.showErrorMessage("Du måste välja ett lån", "Kunde inte ändra betalplan");
-        }
-        else {
+        } else {
             try {
                 double newPaymentPlan = Integer.parseInt(loanPaymentPlanField.getText());
                 Loan loan = loansOverview.getSelectionModel().getSelectedItem();
 
                 boolean isChangedPaymentPlan = LoanRepository.changePaymentPlan(loan.getLoanId(), newPaymentPlan);
 
-                if(isChangedPaymentPlan){
+                if (isChangedPaymentPlan) {
                     AdminMain.showInformationMessage("Betalplan ändrad", "Allt gick bra");
                     populateLoansOverview();
-                }
-                else {
+                } else {
                     AdminMain.showErrorMessage("Något gick fel", "Kunde inte ändra betalplan");
                 }
             } catch (NumberFormatException e) {
                 AdminMain.showErrorMessage("Betalplan måste anges som en siffra", "Kunde inte ändra betalplan");
             }
         }
+    }
+
+    public void updateTransactionHistory(ActionEvent actionEvent) {
+        if(!accountsOverview.getSelectionModel().isEmpty())
+            populateTransactionHistory(accountsOverview.getSelectionModel().getSelectedItem());
     }
 }

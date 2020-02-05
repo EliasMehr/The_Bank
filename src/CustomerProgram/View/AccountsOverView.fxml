@@ -13,7 +13,7 @@
 
 <AnchorPane prefHeight="555.0" prefWidth="983.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CustomerProgram.Controller.AccountsOverviewController">
    <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="33.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-   <TableView fx:id="accountsOverview" layoutX="20.0" layoutY="143.0" onMouseClicked="#updateTransactionHistory" prefHeight="168.0" prefWidth="470.0">
+   <TableView fx:id="accountsOverview" layoutX="20.0" layoutY="143.0" prefHeight="168.0" prefWidth="470.0">
       <columns>
          <TableColumn fx:id="accountNumCol" prefWidth="88.0" text="Kontonummer" />
          <TableColumn fx:id="accountTypeCol" prefWidth="77.60003662109375" text="Typ" />
@@ -94,4 +94,5 @@
          <Font size="14.0" />
       </font>
    </Label>
+   <Button layoutX="762.0" layoutY="54.0" mnemonicParsing="false" onAction="#updateTransactionHistory" text="Uppdatera historik" />
 </AnchorPane>

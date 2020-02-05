@@ -103,7 +103,6 @@ public class AccountsOverviewController {
                     .then("INSÄTTNING").otherwise("UTTAG");
         });
 
-        transactionHistory.getItems().clear();
         transactionHistory.setItems(FXCollections.observableList(currentAccount.getTransactions()));
     }
 
